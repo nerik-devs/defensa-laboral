@@ -5,16 +5,16 @@ const reasons = [
   {
     icon: Clock,
     title: 'Plazos Legales',
-    description: 'Tienes solo 2 meses para demandar despues de un despido. Cada dia cuenta.',
+    description: 'Tienes solo 2 meses para demandar después de un despido. Cada día cuenta.',
   },
   {
     icon: TrendingDown,
     title: 'Evidencia se Pierde',
-    description: 'Testigos olvidan, documentos desaparecen. Mientras mas esperas, mas debil tu caso.',
+    description: 'Testigos olvidan, documentos desaparecen. Mientras más esperas, más débil tu caso.',
   },
   {
     icon: ShieldAlert,
-    title: 'Patron se Prepara',
+    title: 'Patrón se Prepara',
     description: 'Mientras tu dudas, ellos construyen su defensa con abogados corporativos.',
   },
 ];
@@ -72,8 +72,8 @@ export default function Urgency() {
             className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-white mb-6"
           >
             <Clock className="inline-block w-10 h-10 text-accent-400 mr-3 -mt-2" />
-            Cada Dia de Espera{' '}
-            <span className="text-accent-400">Fortalece a tu Ex-Patron</span>
+            Cada Día de Espera{' '}
+            <span className="text-accent-400">Fortalece a tu Ex-Patrón</span>
           </motion.h2>
 
           <motion.p
@@ -83,7 +83,7 @@ export default function Urgency() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto"
           >
-            Mientras tu dudas, ellos preparan su defensa.
+            Mientras tú dudas, ellos preparan su defensa.
             <br />
             <span className="text-white font-semibold">No dejes que ganen por abandono.</span>
           </motion.p>
@@ -128,7 +128,7 @@ export default function Urgency() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span>Actua Ahora - Consulta Gratis</span>
+              <span>Actúa Ahora - Consulta Gratuita</span>
               <motion.span
                 className="inline-block"
                 animate={{ x: [0, 5, 0] }}
@@ -138,10 +138,10 @@ export default function Urgency() {
               </motion.span>
             </motion.a>
             <a
-              href="tel:+525512345678"
+              href="tel:+528717795509"
               className="px-8 py-4 text-white/80 hover:text-white font-medium transition-colors"
             >
-              o llama al 55-1234-5678
+              o llama al 871-779-5509
             </a>
           </motion.div>
 
@@ -154,7 +154,7 @@ export default function Urgency() {
             className="mt-12 text-gray-500 text-sm"
           >
             <span className="text-accent-400 font-semibold">Recuerda:</span>{' '}
-            El plazo legal para demandar es de solo 60 dias despues del despido
+            El plazo legal para demandar es de solo 60 días después del despido
           </motion.div>
         </div>
       </div>

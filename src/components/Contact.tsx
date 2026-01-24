@@ -6,43 +6,48 @@ import {
   MapPin,
   Clock,
   Send,
-  MessageSquare,
+  // MessageSquare,
+  MessageCircle,
   CheckCircle,
 } from 'lucide-react';
 
 const contactInfo = [
   {
     icon: Phone,
-    title: 'Telefono',
-    content: '55-1234-5678',
-    link: 'tel:+525512345678',
+    title: 'Teléfono',
+    content: '8717795509',
+    link: 'tel:+528717795509',
+    newTab: false,
   },
   {
-    icon: MessageSquare,
+    icon: MessageCircle,
     title: 'WhatsApp',
-    content: '55-1234-5678',
-    link: 'https://wa.me/525512345678',
+    content: '8717795509',
+    link: 'https://wa.me/528717795509',
+    newTab: false,
   },
   {
     icon: Mail,
     title: 'Email',
-    content: 'contacto@defensalaboralpro.mx',
-    link: 'mailto:contacto@defensalaboralpro.mx',
+    content: 'contacto@bredrenabogados.com',
+    link: 'mailto:contacto@bredrenabogados.com',
+    newTab: false,
   },
   {
     icon: MapPin,
     title: 'Oficina',
-    content: 'Ciudad de Mexico, CDMX',
-    link: '#',
+    content: 'Av Allende 275 A, Torreón, Coah.',
+    link: 'https://maps.app.goo.gl/gVv76J4bR2sMwVtn8',
+    newTab: true,
   },
 ];
 
 const caseTypes = [
   'Despido Injustificado',
   'Acoso Laboral',
-  'Reduccion de Salario',
-  'Incapacidad Medica',
-  'Pension',
+  'Reducción de Salario',
+  'Incapacidad Médica',
+  'Pensión',
   'Otro',
 ];
 
@@ -96,7 +101,7 @@ export default function Contact() {
             <span className="text-primary-600">Gratuita</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Cuentanos tu situacion y un abogado especialista te contactara en
+            Cuéntanos tu situación y un abogado especialista te contactará en
             menos de 24 horas.
           </p>
         </motion.div>
@@ -112,7 +117,7 @@ export default function Contact() {
           >
             <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 h-full">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                Informacion de Contacto
+                Información de Contacto
               </h3>
 
               <div className="space-y-6 mb-8">
@@ -120,6 +125,7 @@ export default function Contact() {
                   <a
                     key={item.title}
                     href={item.link}
+                    target={item.newTab ? '_blank' : '_self'}
                     className="flex items-start gap-4 group"
                   >
                     <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center group-hover:bg-primary-600 transition-colors">
@@ -140,7 +146,7 @@ export default function Contact() {
                 <div className="flex items-center gap-3 mb-4">
                   <Clock className="w-5 h-5 text-primary-600" />
                   <h4 className="font-semibold text-gray-900">
-                    Horario de Atencion
+                    Horario de Atención
                   </h4>
                 </div>
                 <div className="space-y-2 text-sm">
@@ -149,7 +155,7 @@ export default function Contact() {
                     <span className="font-medium text-gray-900">9:00 - 19:00</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Sabado</span>
+                    <span className="text-gray-600">Sábado</span>
                     <span className="font-medium text-gray-900">10:00 - 14:00</span>
                   </div>
                   <div className="flex justify-between">
@@ -228,7 +234,7 @@ export default function Contact() {
                         value={formData.phone}
                         onChange={handleChange}
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all outline-none"
-                        placeholder="55-1234-5678"
+                        placeholder="871-123-4567"
                       />
                     </div>
                   </div>
@@ -238,7 +244,7 @@ export default function Contact() {
                       htmlFor="email"
                       className="block text-sm font-medium text-gray-700 mb-2"
                     >
-                      Correo Electronico
+                      Correo Electrónico
                     </label>
                     <input
                       type="email"
@@ -280,7 +286,7 @@ export default function Contact() {
                       htmlFor="message"
                       className="block text-sm font-medium text-gray-700 mb-2"
                     >
-                      Describe tu Situacion *
+                      Describe tu situación *
                     </label>
                     <textarea
                       id="message"
@@ -290,7 +296,7 @@ export default function Contact() {
                       value={formData.message}
                       onChange={handleChange}
                       className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all outline-none resize-none"
-                      placeholder="Cuentanos brevemente que sucedio..."
+                      placeholder="Cuentanos brevemente qué sucedió..."
                     />
                   </div>
 
@@ -302,8 +308,8 @@ export default function Contact() {
                       className="mt-1 w-4 h-4 text-primary-600 rounded border-gray-300 focus:ring-primary-500"
                     />
                     <label htmlFor="privacy" className="text-sm text-gray-600">
-                      Acepto la politica de privacidad y autorizo el uso de mis datos
-                      para recibir atencion legal.
+                      Acepto la política de privacidad y autorizo el uso de mis datos
+                      para recibir atención legal.
                     </label>
                   </div>
 

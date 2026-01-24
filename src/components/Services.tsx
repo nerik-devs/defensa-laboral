@@ -14,7 +14,7 @@ const services = [
   {
     icon: UserX,
     title: 'Despido Injustificado',
-    description: 'Defendemos tus derechos cuando te despiden sin causa justificada. Calculamos y exigimos tu indemnizacion completa.',
+    description: 'Defendemos tus derechos cuando te despiden sin causa justificada. Calculamos y exigimos tu indemnización completa.',
     color: 'from-red-500 to-rose-600',
   },
   {
@@ -25,13 +25,13 @@ const services = [
   },
   {
     icon: TrendingDown,
-    title: 'Reduccion de Salario',
+    title: 'Reducción de Salario',
     description: 'Combatimos recortes ilegales a tu sueldo, prestaciones o condiciones laborales sin tu consentimiento.',
     color: 'from-yellow-500 to-orange-500',
   },
   {
     icon: HeartPulse,
-    title: 'Incapacidades Medicas',
+    title: 'Incapacidades Médicas',
     description: 'Aseguramos que recibas todos los beneficios durante enfermedades o accidentes relacionados al trabajo.',
     color: 'from-emerald-500 to-green-600',
   },
@@ -43,8 +43,8 @@ const services = [
   },
   {
     icon: Users,
-    title: 'Constitucion de Sindicatos',
-    description: 'Asesoramos en la formacion legal de sindicatos para defender los derechos colectivos de los trabajadores.',
+    title: 'Constitución de Sindicatos',
+    description: 'Asesoramos en la formación legal de sindicatos para defender los derechos colectivos de los trabajadores.',
     color: 'from-blue-500 to-indigo-600',
   },
   {
@@ -56,7 +56,7 @@ const services = [
   {
     icon: Wallet,
     title: 'Pensiones',
-    description: 'Tramitamos pensiones por invalidez, viudez, orfandad y cesantia. Maximizamos tus beneficios.',
+    description: 'Tramitamos pensiones por invalidez, viudez, orfandad y cesantía. Maximizamos tus beneficios.',
     color: 'from-pink-500 to-rose-600',
   },
 ];
@@ -100,8 +100,8 @@ export default function Services() {
             <span className="text-primary-600">Especializada</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Mas de 15 anos protegiendo los derechos de los trabajadores mexicanos.
-            Cada caso es unico y merece atencion personalizada.
+            Más de 15 años protegiendo los derechos de los trabajadores mexicanos.
+            Cada caso es único y merece atención personalizada.
           </p>
         </motion.div>
 
@@ -163,7 +163,7 @@ export default function Services() {
           className="text-center mt-16"
         >
           <p className="text-gray-600 mb-6">
-            ¿No encuentras tu situacion? Atendemos todos los casos laborales.
+            ¿No encuentras tu situación? Atendemos todos los casos laborales.
           </p>
           <motion.a
             href="#contacto"

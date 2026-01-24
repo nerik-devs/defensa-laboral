@@ -6,22 +6,22 @@ const consultations = [
     title: 'Consulta General',
     price: '$400',
     priceNote: 'MXN',
-    description: '¿Necesitas orientacion sobre tus derechos laborales? Ideal para cualquier situacion que no sea despido.',
+    description: '¿Necesitas orientación sobre tus derechos laborales? Ideal para cualquier situación que no sea despido.',
     featured: false,
     benefits: [
-      'Diagnostico profesional de tu caso',
-      'Revision de documentacion laboral',
-      'Identificacion de violaciones a tus derechos',
+      'Diagnóstico profesional de tu caso',
+      'Revisión de documentación laboral',
+      'Identificación de violaciones a tus derechos',
       'Estrategia legal personalizada',
       'Presupuesto transparente si decides continuar',
     ],
     topics: [
       'Acoso laboral y hostigamiento',
-      'Reduccion de salario o prestaciones',
+      'Reducción de salario o prestaciones',
       'Cambios en condiciones de trabajo',
-      'Incapacidades medicas y derechos',
+      'Incapacidades médicas y derechos',
       'Derechos de seguridad social',
-      'Constitucion de sindicatos',
+      'Constitución de sindicatos',
       'Riesgos de trabajo',
       'Pensiones por invalidez, viudez, orfandad',
     ],
@@ -32,14 +32,14 @@ const consultations = [
     title: 'Consulta por Despido',
     price: 'GRATIS',
     priceNote: 'Sin costo',
-    description: '¿Te despidieron o quieren que renuncies? Evaluacion completa de tu situacion SIN COSTO.',
+    description: '¿Te despidieron o quieren que renuncies? Evaluación completa de tu situación SIN COSTO.',
     featured: true,
     benefits: [
-      'Diagnostico experto de tu despido',
-      'Calculo exacto de tu indemnizacion legal',
-      'Analisis de tu finiquito ofrecido',
-      'Identificacion de irregularidades patronales',
-      'Plan de accion claro y concreto',
+      'Diagnóstico experto de tu despido',
+      'Cálculo exacto de tu indemnización legal',
+      'Análisis de tu finiquito ofrecido',
+      'Identificación de irregularidades patronales',
+      'Plan de acción claro y concreto',
     ],
     topics: [],
     note: 'Creemos que todo trabajador merece saber si sus derechos fueron vulnerados, sin costo alguno. Si tu caso procede, trabajamos con honorarios basados en resultados.',
@@ -68,8 +68,8 @@ export default function Consultations() {
             <span className="text-accent-500">con un abogado?</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Elige el tipo de consulta que mejor se adapte a tu situacion.
-            Tu primera defensa comienza con informacion.
+            Elige el tipo de consulta que mejor se adapte a tu situación.
+            Tu primera defensa comienza con información.
           </p>
         </motion.div>
 
@@ -82,11 +82,10 @@ export default function Consultations() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`relative rounded-3xl overflow-hidden ${
-                consultation.featured
+              className={`relative rounded-3xl overflow-hidden ${consultation.featured
                   ? 'bg-gradient-to-br from-primary-600 to-primary-800 text-white shadow-2xl shadow-primary-600/30 scale-[1.02]'
                   : 'bg-white border-2 border-gray-100 shadow-lg'
-              }`}
+                }`}
             >
               {/* Featured Badge */}
               {consultation.featured && (
@@ -102,32 +101,28 @@ export default function Consultations() {
                 {/* Header */}
                 <div className="mb-8">
                   <h3
-                    className={`text-2xl font-bold mb-2 ${
-                      consultation.featured ? 'text-white' : 'text-gray-900'
-                    }`}
+                    className={`text-2xl font-bold mb-2 ${consultation.featured ? 'text-white' : 'text-gray-900'
+                      }`}
                   >
                     {consultation.title}
                   </h3>
                   <div className="flex items-baseline gap-2 mb-4">
                     <span
-                      className={`text-5xl font-bold ${
-                        consultation.featured ? 'text-white' : 'text-primary-600'
-                      }`}
+                      className={`text-5xl font-bold ${consultation.featured ? 'text-white' : 'text-primary-600'
+                        }`}
                     >
                       {consultation.price}
                     </span>
                     <span
-                      className={`text-sm ${
-                        consultation.featured ? 'text-white/70' : 'text-gray-500'
-                      }`}
+                      className={`text-sm ${consultation.featured ? 'text-white/70' : 'text-gray-500'
+                        }`}
                     >
                       {consultation.priceNote}
                     </span>
                   </div>
                   <p
-                    className={`${
-                      consultation.featured ? 'text-white/80' : 'text-gray-600'
-                    }`}
+                    className={`${consultation.featured ? 'text-white/80' : 'text-gray-600'
+                      }`}
                   >
                     {consultation.description}
                   </p>
@@ -136,9 +131,8 @@ export default function Consultations() {
                 {/* Benefits */}
                 <div className="mb-8">
                   <h4
-                    className={`text-sm font-semibold uppercase tracking-wider mb-4 ${
-                      consultation.featured ? 'text-white/70' : 'text-gray-500'
-                    }`}
+                    className={`text-sm font-semibold uppercase tracking-wider mb-4 ${consultation.featured ? 'text-white/70' : 'text-gray-500'
+                      }`}
                   >
                     Esta consulta te ofrece:
                   </h4>
@@ -146,24 +140,21 @@ export default function Consultations() {
                     {consultation.benefits.map((benefit) => (
                       <li key={benefit} className="flex items-start gap-3">
                         <div
-                          className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center ${
-                            consultation.featured
+                          className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center ${consultation.featured
                               ? 'bg-white/20'
                               : 'bg-green-100'
-                          }`}
+                            }`}
                         >
                           <Check
-                            className={`w-3 h-3 ${
-                              consultation.featured
+                            className={`w-3 h-3 ${consultation.featured
                                 ? 'text-white'
                                 : 'text-green-600'
-                            }`}
+                              }`}
                           />
                         </div>
                         <span
-                          className={`text-sm ${
-                            consultation.featured ? 'text-white/90' : 'text-gray-700'
-                          }`}
+                          className={`text-sm ${consultation.featured ? 'text-white/90' : 'text-gray-700'
+                            }`}
                         >
                           {benefit}
                         </span>
@@ -203,11 +194,10 @@ export default function Consultations() {
                 {/* CTA */}
                 <motion.a
                   href={consultation.ctaLink}
-                  className={`w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-bold text-lg transition-all ${
-                    consultation.featured
+                  className={`w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-bold text-lg transition-all ${consultation.featured
                       ? 'bg-white text-primary-700 hover:bg-gray-100'
                       : 'bg-primary-600 text-white hover:bg-primary-700'
-                  }`}
+                    }`}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >

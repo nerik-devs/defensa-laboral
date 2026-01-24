@@ -3,7 +3,7 @@ import { Phone, MessageCircle, Shield, Award, Clock } from 'lucide-react';
 
 const stats = [
   { icon: Shield, value: '500+', label: 'Casos Ganados' },
-  { icon: Award, value: '15+', label: 'Anos de Experiencia' },
+  { icon: Award, value: '15+', label: 'Años de Experiencia' },
   { icon: Clock, value: '24/7', label: 'Disponibilidad' },
 ];
 
@@ -108,13 +108,13 @@ export default function Hero() {
               </motion.span>
             </motion.a>
             <motion.a
-              href="tel:+525512345678"
+              href="tel:+528717795509"
               className="w-full sm:w-auto px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold text-lg rounded-full border-2 border-white/30 hover:bg-white/20 transition-all flex items-center justify-center gap-3"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <Phone className="w-5 h-5" />
-              55-1234-5678
+              871-779-5509
             </motion.a>
           </motion.div>
 
@@ -148,9 +148,10 @@ export default function Hero() {
 
       {/* Scroll Indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer"
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
+        onClick={() => window.scrollTo({ top: document.getElementById('servicios')?.offsetTop || 0, behavior: 'smooth' })}
       >
         <div className="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-2">
           <motion.div

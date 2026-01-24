@@ -1,30 +1,57 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-50: #fdf2f8;
-  --color-primary-100: #fce7f3;
-  --color-primary-200: #fbcfe8;
-  --color-primary-300: #f9a8d4;
-  --color-primary-400: #f472b6;
-  --color-primary-500: #ec4899;
-  --color-primary-600: #c12872;
-  --color-primary-700: #9d174d;
-  --color-primary-800: #831843;
-  --color-primary-900: #500724;
+  /* Colores de marca Bredren Abogados - Azules profesionales */
+  --color-brand-50: #f4f7fa;
+  --color-brand-100: #e3eaf2;
+  --color-brand-200: #c5d5e6;
+  --color-brand-300: #9ab6d3;
+  --color-brand-400: #6890bd;
+  --color-brand-500: #436f9e;
+  --color-brand-600: #315682;
+  --color-brand-700: #28466a;
+  --color-brand-800: #243d5b;
+  --color-brand-900: #21334b;
+  --color-brand-950: #162233;
 
-  --color-accent-50: #fef2f2;
-  --color-accent-100: #fee2e2;
-  --color-accent-200: #fecaca;
-  --color-accent-300: #fca5a5;
-  --color-accent-400: #f87171;
-  --color-accent-500: #dc2626;
-  --color-accent-600: #b91c1c;
-  --color-accent-700: #991b1b;
-  --color-accent-800: #7f1d1d;
-  --color-accent-900: #450a0a;
+  /* Alias primary = brand (para componentes existentes) */
+  --color-primary-50: #f4f7fa;
+  --color-primary-100: #e3eaf2;
+  --color-primary-200: #c5d5e6;
+  --color-primary-300: #9ab6d3;
+  --color-primary-400: #6890bd;
+  --color-primary-500: #436f9e;
+  --color-primary-600: #315682;
+  --color-primary-700: #28466a;
+  --color-primary-800: #243d5b;
+  --color-primary-900: #21334b;
+  --color-primary-950: #162233;
 
-  --color-gold-400: #fbbf24;
-  --color-gold-500: #f59e0b;
+  /* Colores de acento - Dorado Bredren */
+  --color-gold-50: #fbf9eb;
+  --color-gold-100: #f5f0ce;
+  --color-gold-200: #ebde9e;
+  --color-gold-300: #dec466;
+  --color-gold-400: #d1ab3d;
+  --color-gold-500: #b88f28;
+  --color-gold-600: #996f20;
+  --color-gold-700: #7a541d;
+  --color-gold-800: #66451f;
+  --color-gold-900: #563a1f;
+  --color-gold-950: #311e0e;
+
+  /* Alias accent = gold (para componentes existentes) */
+  --color-accent-50: #fbf9eb;
+  --color-accent-100: #f5f0ce;
+  --color-accent-200: #ebde9e;
+  --color-accent-300: #dec466;
+  --color-accent-400: #d1ab3d;
+  --color-accent-500: #b88f28;
+  --color-accent-600: #996f20;
+  --color-accent-700: #7a541d;
+  --color-accent-800: #66451f;
+  --color-accent-900: #563a1f;
+  --color-accent-950: #311e0e;
 
   --font-display: 'Playfair Display', Georgia, serif;
 }
@@ -43,7 +70,12 @@
     color: #111827;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
   }
 }
@@ -54,11 +86,11 @@
   }
 
   .gradient-primary {
-    background: linear-gradient(135deg, #c12872 0%, #831843 100%);
+    background: linear-gradient(135deg, #315682 0%, #162233 100%);
   }
 
   .gradient-dark {
-    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    background: linear-gradient(135deg, #21334B 0%, #162233 100%);
   }
 
   .glass {

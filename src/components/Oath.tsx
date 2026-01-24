@@ -10,7 +10,7 @@ const values = [
   {
     icon: Eye,
     title: 'Veracidad Absoluta',
-    description: 'en cada actualizacion',
+    description: 'en cada actualización',
   },
   {
     icon: Sword,
@@ -20,7 +20,7 @@ const values = [
   {
     icon: HandshakeIcon,
     title: 'Respeto Total',
-    description: 'a tu tiempo y situacion',
+    description: 'a tu tiempo y situación',
   },
   {
     icon: Scale,
@@ -120,7 +120,7 @@ export default function Oath() {
             <div className="flex items-center gap-2">
               <Scale className="w-6 h-6 text-primary-600" />
               <span className="text-gray-600 font-medium">
-                Defensa Laboral Pro
+                Bredren Abogados
               </span>
             </div>
             <div className="w-16 h-px bg-gray-300" />

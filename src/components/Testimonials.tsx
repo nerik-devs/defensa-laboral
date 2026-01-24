@@ -6,8 +6,9 @@ const testimonials = [
     name: 'Carlos Martinez',
     role: 'Gerente de Operaciones',
     company: 'Empresa de Manufactura',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
-    content: 'Despues de 12 anos en la empresa me despidieron sin justificacion. Defensa Laboral Pro logro que me pagaran el triple de lo que me ofrecieron inicialmente. Profesionales de primera.',
+    // image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+    image: 'https://ik.imagekit.io/x2dirkim6/tr:n-ik_ml_thumbnail/images/avatars/characters/character_avatar_1BRo8ocWR.webp',
+    content: 'Después de 12 años en la empresa me despidieron sin justificación. Bredren Abogados logró que me pagaran el triple de lo que me ofrecieron inicialmente. Profesionales de primera.',
     rating: 5,
     result: '$450,000 MXN recuperados',
   },
@@ -16,16 +17,16 @@ const testimonials = [
     role: 'Ejecutiva de Ventas',
     company: 'Corporativo Comercial',
     image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face',
-    content: 'Intente negociar sola con mi ex-patron, pero mi defensor laboral nunca se dejo presionar y ganamos el caso completo. Su experiencia marco toda la diferencia.',
+    content: 'Intenté negociar sola con mi ex-patron, pero mi defensor laboral nunca se dejó presionar y ganamos el caso completo. Su experiencia marcó toda la diferencia.',
     rating: 5,
-    result: 'Indemnizacion completa + salarios caidos',
+    result: 'Indemnización completa + salarios caidos',
   },
   {
     name: 'Roberto Hernandez',
     role: 'Supervisor de Produccion',
     company: 'Industria Automotriz',
     image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-    content: 'Sufri un accidente de trabajo y la empresa no queria reconocerlo. Gracias a su equipo legal, obtuve mi pension por incapacidad permanente y todos mis derechos.',
+    content: 'Sufrí un accidente de trabajo y la empresa no quería reconocerlo. Gracias a su equipo legal, obtuve mi pensión por incapacidad permanente y todos mis derechos.',
     rating: 5,
     result: 'Pension vitalicia asegurada',
   },
@@ -34,7 +35,7 @@ const testimonials = [
     role: 'Contadora',
     company: 'Despacho Contable',
     image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
-    content: 'Me reducian el salario cada mes con pretextos. Defensa Laboral Pro documento todo y logro que me reintegraran los salarios no pagados de 2 anos.',
+    content: 'Me reducían el salario cada mes con pretextos. Defensa Laboral Pro documento todo y logré que me reintegraran los salarios no pagados de 2 años.',
     rating: 5,
     result: '$180,000 MXN en salarios recuperados',
   },
@@ -131,8 +132,8 @@ export default function Testimonials() {
         >
           <div className="inline-flex items-center gap-8 px-8 py-4 bg-white rounded-2xl shadow-lg border border-gray-100">
             <div className="text-center">
-              <div className="text-3xl font-bold text-primary-600">98%</div>
-              <div className="text-sm text-gray-500">Tasa de Exito</div>
+              <div className="text-3xl font-bold text-primary-600">100%</div>
+              <div className="text-sm text-gray-500">Tasa de Éxito</div>
             </div>
             <div className="w-px h-12 bg-gray-200" />
             <div className="text-center">
@@ -142,7 +143,7 @@ export default function Testimonials() {
             <div className="w-px h-12 bg-gray-200" />
             <div className="text-center">
               <div className="text-3xl font-bold text-primary-600">4.9/5</div>
-              <div className="text-sm text-gray-500">Calificacion</div>
+              <div className="text-sm text-gray-500">Calificación</div>
             </div>
           </div>
         </motion.div>
