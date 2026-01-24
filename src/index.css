@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-50: #fdf2f8;
+  --color-primary-100: #fce7f3;
+  --color-primary-200: #fbcfe8;
+  --color-primary-300: #f9a8d4;
+  --color-primary-400: #f472b6;
+  --color-primary-500: #ec4899;
+  --color-primary-600: #c12872;
+  --color-primary-700: #9d174d;
+  --color-primary-800: #831843;
+  --color-primary-900: #500724;
+
+  --color-accent-50: #fef2f2;
+  --color-accent-100: #fee2e2;
+  --color-accent-200: #fecaca;
+  --color-accent-300: #fca5a5;
+  --color-accent-400: #f87171;
+  --color-accent-500: #dc2626;
+  --color-accent-600: #b91c1c;
+  --color-accent-700: #991b1b;
+  --color-accent-800: #7f1d1d;
+  --color-accent-900: #450a0a;
+
+  --color-gold-400: #fbbf24;
+  --color-gold-500: #f59e0b;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    background-color: white;
+    color: #111827;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-primary {
+    background: linear-gradient(135deg, #c12872 0%, #831843 100%);
+  }
+
+  .gradient-dark {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+  }
+}
