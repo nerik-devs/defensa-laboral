@@ -44,7 +44,7 @@ export default function Navbar() {
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={'fixed top-0 z-50 w-full transition-all duration-300 border-b border-transparent bg-white/90 backdrop-blur-md shadow-sm border-gray-100 py-2'}>
+        className={`fixed top-0 z-50 w-full transition-all duration-300 border-b ${isScrolled ? 'bg-white/95 backdrop-blur-md shadow-sm border-gray-100' : 'bg-white/90 backdrop-blur-md border-transparent'} py-2`}>
         <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
           {/* Logo */}
           <a href="#inicio" className="flex items-center gap-3 group">
