@@ -9,6 +9,8 @@ const ResultStep: React.FC<StepProps> = ({ onClose, data }) => {
   const [isSending, setIsSending] = useState(true);
   const [internalId, setInternalId] = useState('');
   const [sinacolStatus, setSinacolStatus] = useState<SinacolStatus>('idle');
+  const [caseNumber, setCaseNumber] = useState<string | null>(null);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -53,6 +55,7 @@ const ResultStep: React.FC<StepProps> = ({ onClose, data }) => {
 
   const handlePrepareSinacol = async () => {
     setSinacolStatus('loading');
+    setValidationError(null);
     try {
       const serverUrl = getServerUrl();
       console.log('[SINACOL] Conectando a:', serverUrl);
@@ -61,7 +64,22 @@ const ResultStep: React.FC<StepProps> = ({ onClose, data }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-      if (!res.ok) throw new Error('Respuesta no exitosa del servidor');
+      const body = await res.json().catch(() => null);
+
+      if (res.status === 422) {
+        // El CRM rechazó los datos (CURP/RFC inválidos, campos faltantes)
+        const details = body?.details as Record<string, string[]> | undefined;
+        const fields = details ? Object.values(details).flat().join(' · ') : '';
+        setValidationError(fields || body?.error || 'Los datos no pasaron la validación.');
+        setSinacolStatus('error');
+        return;
+      }
+      if (!res.ok || !body?.ok) throw new Error(body?.error || 'Respuesta no exitosa del servidor');
+
+      if (body.caseNumber) {
+        setCaseNumber(body.caseNumber);
+        setInternalId(body.caseNumber);
+      }
       setSinacolStatus('success');
     } catch (e) {
       console.error('[SINACOL] Error:', e);
@@ -151,12 +169,22 @@ const ResultStep: React.FC<StepProps> = ({ onClose, data }) => {
               {sinacolStatus === 'error' && 'Reintentar SINACOL'}
             </button>
 
-            {sinacolStatus === 'error' && (
+            {sinacolStatus === 'error' && validationError && (
+              <p className="mt-2 text-xs text-red-600 text-center">
+                Hay datos que necesitan corrección: <strong>{validationError}</strong>. Regresa a los pasos anteriores para corregirlos.
+              </p>
+            )}
+            {sinacolStatus === 'error' && !validationError && (
               <p className="mt-2 text-xs text-red-600 text-center">
                 No se pudo conectar al servidor. Verifica: 1) que <code className="bg-red-50 px-1 rounded">iniciar-servidor-sinacol.bat</code> esté corriendo, y 2) que el puerto <strong>3001</strong> también esté expuesto en el túnel de VS Code.
               </p>
             )}
-            {sinacolStatus === 'success' && (
+            {sinacolStatus === 'success' && caseNumber && (
+              <p className="mt-2 text-xs text-green-700 text-center">
+                Tu caso <strong>{caseNumber}</strong> quedó registrado y la solicitud SINACOL se está procesando automáticamente. Un abogado dará seguimiento.
+              </p>
+            )}
+            {sinacolStatus === 'success' && !caseNumber && (
               <p className="mt-2 text-xs text-green-700 text-center">
                 El formulario SINACOL está pre-llenado. Revisa cada paso en el navegador y haz clic en <strong>Enviar</strong> cuando estés listo.
               </p>
