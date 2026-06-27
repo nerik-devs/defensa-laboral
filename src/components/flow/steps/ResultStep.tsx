@@ -44,8 +44,12 @@ const ResultStep: React.FC<StepProps> = ({ onClose, data }) => {
   };
 
   function getServerUrl(): string {
-    const { hostname, protocol } = window.location;
-    // Detecta patrón de devtunnel: abc123-5173.use.devtunnels.ms
+    // Producción: URL del server SINACOL inyectada en el build (variable Vite).
+    const configured = import.meta.env.VITE_SINACOL_SERVER_URL;
+    if (configured) return configured.replace(/\/$/, '');
+
+    // Desarrollo: detecta patrón de devtunnel (abc123-5173.use.devtunnels.ms) o usa localhost.
+    const { hostname } = window.location;
     const tunnelMatch = hostname.match(/^(.+?)-\d+\.(use\.devtunnels\.ms)$/);
     if (tunnelMatch) {
       return `https://${tunnelMatch[1]}-3001.${tunnelMatch[2]}`;
