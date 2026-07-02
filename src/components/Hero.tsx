@@ -7,7 +7,7 @@ const stats = [
   { icon: Clock, value: '24/7', label: 'Disponibilidad' },
 ];
 
-export default function Hero() {
+export default function Hero({ onOpenFlow }: { onOpenFlow: () => void }) {
   return (
     <section
       id="inicio"
@@ -91,14 +91,14 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
           >
-            <motion.a
-              href="#consultas"
+            <motion.button
+              onClick={onOpenFlow}
               className="group w-full sm:w-auto px-8 py-4 bg-white text-primary-700 font-bold text-lg rounded-full shadow-2xl hover:shadow-white/25 transition-all flex items-center justify-center gap-3"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <MessageCircle className="w-5 h-5" />
-              Consulta Juridica Gratuita
+              Primeros Auxilios Laborales
               <motion.span
                 className="inline-block"
                 animate={{ x: [0, 5, 0] }}
@@ -106,7 +106,7 @@ export default function Hero() {
               >
                 →
               </motion.span>
-            </motion.a>
+            </motion.button>
             <motion.a
               href="tel:+528717795509"
               className="w-full sm:w-auto px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold text-lg rounded-full border-2 border-white/30 hover:bg-white/20 transition-all flex items-center justify-center gap-3"
