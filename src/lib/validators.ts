@@ -25,6 +25,14 @@ export const GENEROS = ['MASCULINO', 'FEMENINO', 'OTRO', 'NO BINARIO'] as const;
 
 export const TIPO_PERSONA = ['Física', 'Moral'] as const;
 
+export const PERIODICIDAD = ['Semanal', 'Quincenal', 'Mensual'] as const;
+
+export const JORNADA = ['Diurna', 'Nocturna', 'Mixta'] as const;
+
+export const HORAS_SEMANALES_MIN = 1;
+
+export const HORAS_SEMANALES_MAX = 84;
+
 export const PROBLEM_TYPES = ['despido', 'renuncia_forzada', 'falta_pago', 'acoso', 'otro'] as const;
 
 const REQUIRED_MESSAGE = 'Este campo es obligatorio.';
@@ -155,6 +163,30 @@ export function validateEmployer(data: EmployerData): FieldErrors {
 
   const employerCalleError = required(data.employerCalle);
   if (employerCalleError) errors.employerCalle = employerCalleError;
+
+  // SINACOL needs the employer (citado) postal code; the worker CP is never reused.
+  if (!data.employerCodigoPostal) {
+    errors.employerCodigoPostal = REQUIRED_MESSAGE;
+  } else if (!CODIGO_POSTAL_REGEX.test(data.employerCodigoPostal)) {
+    errors.employerCodigoPostal = 'El código postal debe tener 5 dígitos.';
+  }
+
+  if (!(PERIODICIDAD as readonly string[]).includes(data.periodicidad)) {
+    errors.periodicidad = 'Selecciona una periodicidad de pago válida.';
+  }
+
+  if (!(JORNADA as readonly string[]).includes(data.jornada)) {
+    errors.jornada = 'Selecciona un tipo de jornada válido.';
+  }
+
+  if (!/^\d+$/.test(data.horasSemanales)) {
+    errors.horasSemanales = 'Las horas semanales deben ser un número entero.';
+  } else {
+    const horas = Number(data.horasSemanales);
+    if (horas < HORAS_SEMANALES_MIN || horas > HORAS_SEMANALES_MAX) {
+      errors.horasSemanales = `Las horas semanales deben estar entre ${HORAS_SEMANALES_MIN} y ${HORAS_SEMANALES_MAX}.`;
+    }
+  }
 
   return errors;
 }

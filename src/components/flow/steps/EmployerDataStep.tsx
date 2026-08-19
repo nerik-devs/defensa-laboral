@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Building, Briefcase, MapPin, Calendar, DollarSign, Award, ChevronLeft, ChevronRight, FileDigit, Users } from 'lucide-react';
 import type { StepProps } from '../LaboralFlowModal';
 import { MEXICAN_STATES } from '../../../types/flow';
-import { validateEmployer } from '../../../lib/validators';
+import { validateEmployer, PERIODICIDAD, JORNADA } from '../../../lib/validators';
 import type { FieldErrors } from '../../../lib/validators';
 
 const EmployerDataStep: React.FC<StepProps> = ({ onNext, onBack, data, updateData }) => {
@@ -233,6 +233,70 @@ const EmployerDataStep: React.FC<StepProps> = ({ onNext, onBack, data, updateDat
             </div>
           </div>
 
+          {/* Periodicidad, jornada y horas semanales */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label htmlFor="periodicidad" className="block text-sm font-medium text-gray-700 mb-1">
+                Periodicidad de Pago
+              </label>
+              <select
+                id="periodicidad"
+                name="periodicidad"
+                value={localData.periodicidad}
+                onChange={handleChange}
+                aria-invalid={Boolean(errors.periodicidad)}
+                className={`block w-full px-3 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
+                  errors.periodicidad ? 'border-red-400' : 'border-gray-300'
+                }`}
+              >
+                {PERIODICIDAD.map(p => (
+                  <option key={p} value={p}>{p}</option>
+                ))}
+              </select>
+              {fieldError('periodicidad')}
+            </div>
+            <div>
+              <label htmlFor="jornada" className="block text-sm font-medium text-gray-700 mb-1">
+                Jornada
+              </label>
+              <select
+                id="jornada"
+                name="jornada"
+                value={localData.jornada}
+                onChange={handleChange}
+                aria-invalid={Boolean(errors.jornada)}
+                className={`block w-full px-3 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
+                  errors.jornada ? 'border-red-400' : 'border-gray-300'
+                }`}
+              >
+                {JORNADA.map(j => (
+                  <option key={j} value={j}>{j}</option>
+                ))}
+              </select>
+              {fieldError('jornada')}
+            </div>
+            <div>
+              <label htmlFor="horasSemanales" className="block text-sm font-medium text-gray-700 mb-1">
+                Horas Semanales
+              </label>
+              <input
+                type="number"
+                id="horasSemanales"
+                name="horasSemanales"
+                min="1"
+                max="84"
+                value={localData.horasSemanales}
+                onChange={handleChange}
+                aria-invalid={Boolean(errors.horasSemanales)}
+                className={`block w-full px-3 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
+                  errors.horasSemanales ? 'border-red-400' : 'border-gray-300'
+                }`}
+                placeholder="Ej. 48"
+              />
+              {fieldError('horasSemanales')}
+            </div>
+          </div>
+
           {/* Domicilio del empleador */}
           <div className="pt-2 border-t border-gray-100">
             <p className="text-sm font-semibold text-gray-600 mb-3 flex items-center gap-2">
@@ -272,20 +336,20 @@ const EmployerDataStep: React.FC<StepProps> = ({ onNext, onBack, data, updateDat
                   {fieldError('employerMunicipio')}
                 </div>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="sm:col-span-2">
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Calle y número *</label>
-                  <input
-                    type="text"
-                    name="employerCalle"
-                    value={localData.employerCalle}
-                    onChange={handleChange}
-                    aria-invalid={Boolean(errors.employerCalle)}
-                    className={inputClass('employerCalle')}
-                    placeholder="Ej. Av. Industria 456"
-                  />
-                  {fieldError('employerCalle')}
-                </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1">Calle y número *</label>
+                <input
+                  type="text"
+                  name="employerCalle"
+                  value={localData.employerCalle}
+                  onChange={handleChange}
+                  aria-invalid={Boolean(errors.employerCalle)}
+                  className={inputClass('employerCalle')}
+                  placeholder="Ej. Av. Industria 456"
+                />
+                {fieldError('employerCalle')}
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-medium text-gray-600 mb-1">Colonia</label>
                   <input
@@ -296,6 +360,24 @@ const EmployerDataStep: React.FC<StepProps> = ({ onNext, onBack, data, updateDat
                     className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-sm"
                     placeholder="Ej. Industrial"
                   />
+                </div>
+                <div>
+                  <label htmlFor="employerCodigoPostal" className="block text-xs font-medium text-gray-600 mb-1">
+                    Código Postal *
+                  </label>
+                  <input
+                    type="text"
+                    id="employerCodigoPostal"
+                    name="employerCodigoPostal"
+                    value={localData.employerCodigoPostal}
+                    onChange={handleChange}
+                    aria-invalid={Boolean(errors.employerCodigoPostal)}
+                    className={inputClass('employerCodigoPostal')}
+                    placeholder="Ej. 25280"
+                    inputMode="numeric"
+                    maxLength={5}
+                  />
+                  {fieldError('employerCodigoPostal')}
                 </div>
               </div>
             </div>
