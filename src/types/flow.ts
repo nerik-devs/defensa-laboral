@@ -44,9 +44,12 @@ export interface FlowState {
   worker: WorkerData;
   employer: EmployerData;
   problem: ProblemData;
+  /** Honeypot field — must stay empty for humans; a non-empty value marks a bot. */
+  website: string;
 }
 
 export const initialFlowState: FlowState = {
+  website: '',
   worker: {
     name: '',
     primerApellido: '',
