@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ShieldAlert, LogOut, DollarSign, HandMetal, HelpCircle, ChevronLeft, ChevronRight, Calendar, Factory } from 'lucide-react';
 import type { StepProps } from '../LaboralFlowModal';
+import type { ProblemData } from '../../../types/flow';
 import { SINACOL_INDUSTRIAS, SINACOL_OBJETO_MAP } from '../../../types/flow';
+import { validateProblem } from '../../../lib/validators';
+import type { FieldErrors } from '../../../lib/validators';
 
 const PROBLEM_TYPES = [
   { id: 'despido', label: 'Despido Injustificado', icon: LogOut, desc: 'Te despidieron sin causa justificada y sin liquidación al 100%.' },
@@ -18,24 +21,45 @@ const ProblemTypeStep: React.FC<StepProps> = ({ onNext, onBack, data, updateData
   const [fechaConflicto, setFechaConflicto] = useState(data.problem.fechaConflicto || '');
   const [industria, setIndustria] = useState(data.problem.industria || 'Ninguna de las anteriores');
   const [objetoSolicitud, setObjetoSolicitud] = useState(data.problem.objetoSolicitud || '');
+  const [errors, setErrors] = useState<FieldErrors>({});
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!problemType) {
-      alert('Por favor selecciona un tipo de problema.');
-      return;
-    }
-    if (!fechaConflicto) {
-      alert('Por favor indica la fecha del conflicto.');
-      return;
-    }
     const resolvedObjeto = problemType !== 'otro'
-      ? SINACOL_OBJETO_MAP[problemType]
+      ? SINACOL_OBJETO_MAP[problemType] ?? ''
       : objetoSolicitud;
+
+    const nextErrors = validateProblem({
+      problemType,
+      description,
+      fechaConflicto,
+      industria,
+      objetoSolicitud: resolvedObjeto,
+    });
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) return;
 
     updateData('problem', { problemType, description, fechaConflicto, industria, objetoSolicitud: resolvedObjeto });
     onNext();
   };
+
+  const clearError = (name: string) => {
+    if (errors[name]) {
+      setErrors(prev => {
+        const next = { ...prev };
+        delete next[name];
+        return next;
+      });
+    }
+  };
+
+  const fieldError = (name: string) =>
+    errors[name] ? <p className="text-xs text-red-600 mt-1" role="alert">{errors[name]}</p> : null;
+
+  const inputClass = (name: string, extra = '') =>
+    `block w-full px-3 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
+      errors[name] ? 'border-red-400' : 'border-gray-300'
+    } ${extra}`;
 
   return (
     <motion.div
@@ -49,7 +73,7 @@ const ProblemTypeStep: React.FC<StepProps> = ({ onNext, onBack, data, updateData
         <p className="text-gray-500 mt-1">Selecciona la situación que mejor describa tu caso.</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex-1 flex flex-col">
+      <form onSubmit={handleSubmit} className="flex-1 flex flex-col" noValidate>
         <div className="space-y-4 mb-6 overflow-y-auto pr-1">
 
           {/* Fecha del conflicto */}
@@ -60,11 +84,12 @@ const ProblemTypeStep: React.FC<StepProps> = ({ onNext, onBack, data, updateData
             </label>
             <input
               type="date"
-              required
               value={fechaConflicto}
-              onChange={e => setFechaConflicto(e.target.value)}
-              className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              onChange={e => { setFechaConflicto(e.target.value); clearError('fechaConflicto'); }}
+              aria-invalid={Boolean(errors.fechaConflicto)}
+              className={inputClass('fechaConflicto')}
             />
+            {fieldError('fechaConflicto')}
           </div>
 
           {/* Tipo de problema */}
@@ -87,7 +112,7 @@ const ProblemTypeStep: React.FC<StepProps> = ({ onNext, onBack, data, updateData
                     className="sr-only"
                     value={type.id}
                     checked={isSelected}
-                    onChange={(e) => setProblemType(e.target.value as any)}
+                    onChange={(e) => { setProblemType(e.target.value as ProblemData['problemType']); clearError('problemType'); }}
                   />
                   <div className={`p-2 rounded-lg mr-4 ${isSelected ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-500'}`}>
                     <Icon className="w-6 h-6" />
@@ -108,6 +133,7 @@ const ProblemTypeStep: React.FC<StepProps> = ({ onNext, onBack, data, updateData
                 </label>
               );
             })}
+            {fieldError('problemType')}
           </div>
 
           {/* Objeto de solicitud para "otro" */}
@@ -117,10 +143,10 @@ const ProblemTypeStep: React.FC<StepProps> = ({ onNext, onBack, data, updateData
                 Especifica el objeto de la solicitud SINACOL *
               </label>
               <select
-                required
                 value={objetoSolicitud}
-                onChange={e => setObjetoSolicitud(e.target.value)}
-                className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                onChange={e => { setObjetoSolicitud(e.target.value); clearError('objetoSolicitud'); }}
+                aria-invalid={Boolean(errors.objetoSolicitud)}
+                className={inputClass('objetoSolicitud')}
               >
                 <option value="">Selecciona...</option>
                 <option value="Pago de prestaciones">Pago de prestaciones</option>
@@ -128,6 +154,7 @@ const ProblemTypeStep: React.FC<StepProps> = ({ onNext, onBack, data, updateData
                 <option value="Derecho de antigüedad">Derecho de antigüedad</option>
                 <option value="Derecho de ascenso">Derecho de ascenso</option>
               </select>
+              {fieldError('objetoSolicitud')}
             </div>
           )}
 
@@ -139,14 +166,16 @@ const ProblemTypeStep: React.FC<StepProps> = ({ onNext, onBack, data, updateData
             </label>
             <select
               value={industria}
-              onChange={e => setIndustria(e.target.value)}
-              className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              onChange={e => { setIndustria(e.target.value); clearError('industria'); }}
+              aria-invalid={Boolean(errors.industria)}
+              className={inputClass('industria')}
             >
               {SINACOL_INDUSTRIAS.map(ind => (
                 <option key={ind} value={ind}>{ind}</option>
               ))}
             </select>
             <p className="text-xs text-gray-400 mt-1">Determina la jurisdicción (federal o local) en SINACOL.</p>
+            {fieldError('industria')}
           </div>
 
           {/* Descripción */}
@@ -175,8 +204,7 @@ const ProblemTypeStep: React.FC<StepProps> = ({ onNext, onBack, data, updateData
           </button>
           <button
             type="submit"
-            disabled={!problemType}
-            className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors flex items-center gap-2"
+            className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors flex items-center gap-2"
           >
             Estimar Liquidación
             <ChevronRight className="w-4 h-4" />
