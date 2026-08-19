@@ -45,6 +45,10 @@ function employer(overrides: Partial<EmployerData> = {}): EmployerData {
     employerColonia: 'Industrial',
     employerCalle: 'Av. Industria 456',
     employerNumero: '',
+    employerCodigoPostal: '25280',
+    periodicidad: 'Mensual',
+    horasSemanales: '48',
+    jornada: 'Diurna',
     ...overrides,
   };
 }
@@ -182,6 +186,39 @@ describe('validateEmployer', () => {
 
   it('requires employerCalle', () => {
     expect(validateEmployer(employer({ employerCalle: '' })).employerCalle).toBeTruthy();
+  });
+
+  it('requires employerCodigoPostal and validates 5 digits', () => {
+    expect(validateEmployer(employer({ employerCodigoPostal: '' })).employerCodigoPostal).toBeTruthy();
+    expect(validateEmployer(employer({ employerCodigoPostal: '2528' })).employerCodigoPostal).toContain('5 dígitos');
+    expect(validateEmployer(employer({ employerCodigoPostal: '252800' })).employerCodigoPostal).toContain('5 dígitos');
+    expect(validateEmployer(employer({ employerCodigoPostal: '25280' })).employerCodigoPostal).toBeUndefined();
+  });
+
+  it('validates periodicidad against the allowed values', () => {
+    expect(validateEmployer(employer({ periodicidad: '' })).periodicidad).toBeTruthy();
+    expect(validateEmployer(employer({ periodicidad: 'Semanal' })).periodicidad).toBeUndefined();
+    expect(validateEmployer(employer({ periodicidad: 'Quincenal' })).periodicidad).toBeUndefined();
+    expect(validateEmployer(employer({ periodicidad: 'Mensual' })).periodicidad).toBeUndefined();
+    expect(validateEmployer(employer({ periodicidad: 'Anual' })).periodicidad).toContain('válida');
+  });
+
+  it('validates jornada against the allowed values', () => {
+    expect(validateEmployer(employer({ jornada: '' })).jornada).toBeTruthy();
+    expect(validateEmployer(employer({ jornada: 'Diurna' })).jornada).toBeUndefined();
+    expect(validateEmployer(employer({ jornada: 'Nocturna' })).jornada).toBeUndefined();
+    expect(validateEmployer(employer({ jornada: 'Mixta' })).jornada).toBeUndefined();
+    expect(validateEmployer(employer({ jornada: 'Rotativa' })).jornada).toContain('válido');
+  });
+
+  it('validates horasSemanales as an integer between 1 and 84', () => {
+    expect(validateEmployer(employer({ horasSemanales: '' })).horasSemanales).toBeTruthy();
+    expect(validateEmployer(employer({ horasSemanales: 'abc' })).horasSemanales).toContain('entero');
+    expect(validateEmployer(employer({ horasSemanales: '0' })).horasSemanales).toContain('entre 1 y 84');
+    expect(validateEmployer(employer({ horasSemanales: '85' })).horasSemanales).toContain('entre 1 y 84');
+    expect(validateEmployer(employer({ horasSemanales: '48' })).horasSemanales).toBeUndefined();
+    expect(validateEmployer(employer({ horasSemanales: '1' })).horasSemanales).toBeUndefined();
+    expect(validateEmployer(employer({ horasSemanales: '84' })).horasSemanales).toBeUndefined();
   });
 
   it('validates optional endDate format', () => {
