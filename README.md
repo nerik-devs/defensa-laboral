@@ -1,73 +1,102 @@
-# React + TypeScript + Vite
+# defensa-laboral-pro — landing (Astro)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Public website of the firm. A single static page built with **Astro 7**
+(`output: 'static'`) plus ONE React island: the 7-step intake flow that posts
+the case to the SINACOL automation server.
 
-Currently, two official plugins are available:
+## Commands
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+| Command | What it does |
+|---|---|
+| `npm install` | Install dependencies |
+| `npm run dev` | Dev server on `http://localhost:4321` (host exposed on the LAN) |
+| `npm run build` | Production build → `dist/` (static HTML + one island bundle) |
+| `npm run preview` | Serve `dist/` locally the way production does |
+| `npm run typecheck` | `astro check` — type-checks `.astro`, `.ts` and `.tsx` |
+| `npm test` | Vitest (`src/lib/validators.test.ts`) |
+| `npm run lint` | ESLint over `.ts`/`.tsx` |
+| `npm start` | `serve -s dist` — what the Coolify static app runs |
 
-## React Compiler
+Quality gate before pushing: `npm run typecheck && npm run build && npm test`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Environment
 
-## Expanding the ESLint configuration
+| Variable | Scope | Purpose |
+|---|---|---|
+| `PUBLIC_SINACOL_SERVER_URL` | **build-time** | Base URL of the SINACOL automation server the island POSTs to (`/api/sinacol-fill`). Astro only exposes `PUBLIC_*` variables to client code and inlines them at build, so on Coolify it must be a build arg, not only a runtime env. |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Production builds without it still succeed, but the flow shows a configuration
+error instead of silently falling back to localhost. In development it may be
+empty and the island falls back to `http://localhost:3001`. Copy
+`.env.example` to `.env` to set it locally.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+The old Vite-era `VITE_SINACOL_SERVER_URL` is no longer read anywhere.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Island architecture (1-pager)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/pages/index.astro           ← composes the page, mounts <FlowIsland client:idle />
+src/layouts/BaseLayout.astro    ← <head> (SEO, OG, JSON-LD, fonts) + open-flow click delegation
+src/components/sections/*.astro ← 9 static sections: zero JS, CSS keyframes for motion
+src/islands/FlowIsland.tsx      ← the ONLY hydrated component (React 19)
+src/components/flow/**          ← LaboralFlowModal + 7 steps (used by the island as-is)
+src/lib/flow-events.ts          ← `defensa:open-flow` event contract
+src/lib/validators.ts           ← intake validation rules (CRM-mirrored, vitest-covered)
+src/styles/global.css           ← Tailwind 4 (`@import "tailwindcss"` + `@theme` tokens)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+**Zero JS by default.** Every landing section (Navbar, Hero, Services,
+Consultations, Testimonials, Oath, Urgency, Contact, Footer) is an `.astro`
+component rendered to plain HTML at build time. Entrance animations are CSS
+keyframes honouring `prefers-reduced-motion`; the mobile nav toggle is a tiny
+inline `<script>` in `Navbar.astro`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+**One island.** `FlowIsland` wraps `LaboralFlowModal` and owns the open/closed
+state. It hydrates with `client:idle`, so React (~57 kB gzip) loads after the
+page is interactive and nothing else on the page ships framework code.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+**How static CTAs open the modal.** Sections never import React. A CTA is just
+`<button data-open-flow="hero">`; `BaseLayout.astro` installs one delegated
+click listener on `document` that calls `dispatchOpenFlow({ source })`, which
+fires the `defensa:open-flow` `CustomEvent` on `window`. `FlowIsland` listens
+for that event and opens the modal. The attribute value is a free-form origin
+tag (`hero`, `navbar`, `contact`, …) carried in `event.detail.source` for
+analytics.
+
 ```
+[data-open-flow] click ─▶ BaseLayout delegation ─▶ window "defensa:open-flow" ─▶ FlowIsland setIsOpen(true)
+```
+
+**Payload contract (unchanged from the SPA).** `ResultStep` POSTs the
+`FlowState` — `{ worker, employer, problem, website }` — where `website` is the
+honeypot (must stay empty for humans) and `employer` carries the SINACOL fields
+(`employerCodigoPostal`, `periodicidad`, `horasSemanales`, `jornada`). 400/422
+responses map `details` field paths back to the owning step.
+
+**Tailwind 4** runs through `@tailwindcss/vite` (configured in
+`astro.config.mjs`); design tokens live in `@theme` inside
+`src/styles/global.css`. There is no `tailwind.config.js` / `postcss.config.js`.
+
+## SEO / performance notes
+
+- `site` in `astro.config.mjs` drives the canonical URL, `og:url`, the
+  `@astrojs/sitemap` output (`/sitemap-index.xml`) and `/robots.txt`
+  (generated by `src/pages/robots.txt.ts`). Confirm the production domain
+  there before go-live.
+- `BaseLayout.astro` emits JSON-LD `LegalService` + `LocalBusiness` built from
+  the firm data shown in the Contact/Footer sections (postal code and geo
+  coordinates are TODO until confirmed).
+- `og:image` currently points at the only raster brand asset in `public/`
+  (155×218 PNG); replace it with a 1200×630 asset when available.
+- Google Fonts are preconnected and loaded non-blocking (preload + media swap,
+  `display=swap`).
+- Images are inlined as base64 data URLs computed at build time because the
+  current Astro 7 / Vite 8 (Rolldown) toolchain fails to resolve asset imports
+  in this repo (see the comment in `Navbar.astro`). Revisit when the
+  toolchain is upgraded so `astro:assets` can take over.
+
+## Deployment
+
+Static app on Coolify: build `npm run build`, publish `dist/`, serve with
+`npm start` (or any static server). Build arg: `PUBLIC_SINACOL_SERVER_URL`.
+See `../COOLIFY_DEPLOY_PLAN.md` §2.3.
