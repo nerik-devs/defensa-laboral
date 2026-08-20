@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { ShieldAlert, LogOut, DollarSign, HandMetal, HelpCircle, ChevronLeft, ChevronRight, Calendar, Factory } from 'lucide-react';
 import type { StepProps } from '../LaboralFlowModal';
 import type { ProblemData } from '../../../types/flow';
@@ -62,11 +61,8 @@ const ProblemTypeStep: React.FC<StepProps> = ({ onNext, onBack, data, updateData
     } ${extra}`;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      className="flex flex-col h-full"
+    <div
+      className="flow-step-enter flex flex-col h-full"
     >
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900">Tipo de Problema</h2>
@@ -211,7 +207,7 @@ const ProblemTypeStep: React.FC<StepProps> = ({ onNext, onBack, data, updateData
           </button>
         </div>
       </form>
-    </motion.div>
+    </div>
   );
 };
 

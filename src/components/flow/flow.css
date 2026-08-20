@@ -1,0 +1,55 @@
+/*
+ * Flow island animations.
+ *
+ * Plain CSS keyframes replace the framer-motion variants the flow used in the
+ * Vite SPA era, so the only client bundle (FlowIsland) stays small.
+ * Imported from LaboralFlowModal.tsx; Astro bundles it with the page CSS.
+ */
+
+@keyframes flow-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes flow-slide-in {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes flow-scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes flow-panel-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Step entry (framer: initial {opacity:0,x:20} -> animate {opacity:1,x:0}). */
+.flow-step-enter {
+  animation: flow-slide-in 0.3s ease-out both;
+}
+
+/* Result step entry (framer: initial {opacity:0,scale:0.95}). */
+.flow-step-enter-scale {
+  animation: flow-scale-in 0.3s ease-out both;
+}
+
+/* Modal backdrop and panel (framer: fade + spring scale/translate). */
+.flow-modal-backdrop {
+  animation: flow-fade-in 0.2s ease-out both;
+}
+
+.flow-modal-panel {
+  animation: flow-panel-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-step-enter,
+  .flow-step-enter-scale,
+  .flow-modal-backdrop,
+  .flow-modal-panel {
+    animation: none;
+  }
+}

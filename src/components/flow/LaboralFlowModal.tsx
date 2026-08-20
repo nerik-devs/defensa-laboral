@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import Modal from '../ui/Modal';
+import Modal from './FlowModal';
+import './flow.css';
 import { initialFlowState } from '../../types/flow';
 import type { FlowState } from '../../types/flow';
 import ConsentStep from './steps/ConsentStep';
@@ -106,10 +107,7 @@ const LaboralFlowModal: React.FC<LaboralFlowModalProps> = ({ isOpen, onClose }) 
         />
       </div>
 
-      {/* 
-        We use motion inside steps or a wrapper here for transitions. 
-        For simplicity, steps will define their own animated entry.
-      */}
+      {/* Each step animates its own entry with the `flow-step-enter` CSS class (see flow.css). */}
       {/* Progress Indicator */}
       {currentStep > 0 && currentStep <= TOTAL_STEPS && (
         <div className="mb-6">

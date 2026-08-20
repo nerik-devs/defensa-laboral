@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
 import { CheckCircle, FileText, CalendarCheck, HelpCircle, Loader2, AlertCircle, ArrowLeft, RefreshCw } from 'lucide-react';
 import type { StepProps } from '../LaboralFlowModal';
 
@@ -35,11 +34,12 @@ function mapFieldToStep(field: string): number {
 
 /**
  * Resolves the SINACOL server base URL.
- * In production the VITE_SINACOL_SERVER_URL build variable is mandatory;
- * the localhost fallback exists for development only.
+ * Astro only exposes `PUBLIC_*` variables to client code, so in production the
+ * PUBLIC_SINACOL_SERVER_URL build variable is mandatory; the localhost fallback
+ * exists for development only (`import.meta.env.DEV`).
  */
 function getServerUrl(): string | null {
-  const configured = import.meta.env.VITE_SINACOL_SERVER_URL;
+  const configured = import.meta.env.PUBLIC_SINACOL_SERVER_URL;
   if (configured) return configured.replace(/\/$/, '');
   if (import.meta.env.DEV) return 'http://localhost:3001';
   return null;
@@ -155,10 +155,8 @@ const ResultStep: React.FC<StepProps> = ({ onClose, data, goToStep }) => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      className="flex flex-col h-full items-center justify-center text-center py-8"
+    <div
+      className="flow-step-enter-scale flex flex-col h-full items-center justify-center text-center py-8"
     >
       {status === 'loading' && (
         <div className="flex flex-col items-center justify-center space-y-6 flex-1 w-full">
@@ -307,7 +305,7 @@ const ResultStep: React.FC<StepProps> = ({ onClose, data, goToStep }) => {
           Cerrar y Volver al Inicio
         </button>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Building, Briefcase, MapPin, Calendar, DollarSign, Award, ChevronLeft, ChevronRight, FileDigit, Users } from 'lucide-react';
 import type { StepProps } from '../LaboralFlowModal';
 import { MEXICAN_STATES } from '../../../types/flow';
@@ -42,11 +41,8 @@ const EmployerDataStep: React.FC<StepProps> = ({ onNext, onBack, data, updateDat
   const isMoral = localData.tipoPersonaCitado === 'Moral';
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      className="flex flex-col h-full"
+    <div
+      className="flow-step-enter flex flex-col h-full"
     >
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900">Datos del Empleador</h2>
@@ -402,7 +398,7 @@ const EmployerDataStep: React.FC<StepProps> = ({ onNext, onBack, data, updateDat
           </button>
         </div>
       </form>
-    </motion.div>
+    </div>
   );
 };
 

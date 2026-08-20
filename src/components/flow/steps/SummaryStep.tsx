@@ -1,15 +1,11 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { User, Building, ShieldAlert, ChevronLeft, Send } from 'lucide-react';
 import type { StepProps } from '../LaboralFlowModal';
 
 const SummaryStep: React.FC<StepProps> = ({ onNext, onBack, data }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      className="flex flex-col h-full"
+    <div
+      className="flow-step-enter flex flex-col h-full"
     >
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900">Revisión de Datos</h2>
@@ -112,7 +108,7 @@ const SummaryStep: React.FC<StepProps> = ({ onNext, onBack, data }) => {
           <Send className="w-4 h-4" />
         </button>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

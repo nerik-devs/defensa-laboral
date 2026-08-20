@@ -2,16 +2,16 @@
  * FlowIsland — the ONLY React island on the landing (mounted with `client:idle`
  * from `src/pages/index.astro`).
  *
- * OWNER: A3. This file is a stub created by A1 so the page builds; A3 replaces
- * the body with `LaboralFlowModal` + steps (src/components/flow/**) and wires
- * `PUBLIC_SINACOL_SERVER_URL`.
- *
- * Contract (see src/lib/flow-events.ts):
+ * Wraps `LaboralFlowModal` (the hardened 7-step intake flow) and owns the
+ * open/closed state. Static sections never import React; they open the modal
+ * through the DOM event contract in `src/lib/flow-events.ts`:
  *   - Static CTAs carry `data-open-flow`; BaseLayout dispatches the
  *     `defensa:open-flow` CustomEvent on `window`.
- *   - This island listens for that event and opens the modal.
+ *   - This island listens for that event on mount, opens the modal, and removes
+ *     the listener on unmount.
  */
 import { useEffect, useState } from 'react';
+import LaboralFlowModal from '../components/flow/LaboralFlowModal';
 import { OPEN_FLOW_EVENT, type OpenFlowEvent } from '../lib/flow-events';
 
 export default function FlowIsland() {
@@ -28,7 +28,5 @@ export default function FlowIsland() {
     return () => window.removeEventListener(OPEN_FLOW_EVENT, onOpen);
   }, []);
 
-  // TODO(A3): render <LaboralFlowModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
-  void isOpen;
-  return null;
+  return <LaboralFlowModal isOpen={isOpen} onClose={() => setIsOpen(false)} />;
 }

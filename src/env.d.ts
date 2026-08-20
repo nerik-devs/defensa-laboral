@@ -4,9 +4,9 @@
  * Environment contract.
  *
  * Astro only exposes `PUBLIC_*` variables to client code, so the flow island
- * must read `PUBLIC_SINACOL_SERVER_URL`. `VITE_SINACOL_SERVER_URL` is kept
- * declared during the migration because src/components/flow/** (A3's scope)
- * still reads it; A3 renames the usage and A4 drops the VITE_ entry.
+ * reads `PUBLIC_SINACOL_SERVER_URL` (src/components/flow/steps/ResultStep.tsx).
+ * `VITE_SINACOL_SERVER_URL` is no longer read anywhere; its declaration is kept
+ * only as a transitional alias and A4 drops it.
  */
 interface ImportMetaEnv {
   /** SINACOL automation server base URL (production). Required in prod builds. */

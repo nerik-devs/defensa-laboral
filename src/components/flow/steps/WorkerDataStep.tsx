@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { User, CreditCard, Phone, Mail, MapPin, Building, ChevronLeft, ChevronRight, Calendar } from 'lucide-react';
 import type { StepProps } from '../LaboralFlowModal';
 import { MEXICAN_STATES, TIPOS_VIALIDAD } from '../../../types/flow';
@@ -40,11 +39,8 @@ const WorkerDataStep: React.FC<StepProps> = ({ onNext, onBack, data, updateData 
     } ${extra}`;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      className="flex flex-col h-full"
+    <div
+      className="flow-step-enter flex flex-col h-full"
     >
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900">Datos del Trabajador</h2>
@@ -350,7 +346,7 @@ const WorkerDataStep: React.FC<StepProps> = ({ onNext, onBack, data, updateData 
           </button>
         </div>
       </form>
-    </motion.div>
+    </div>
   );
 };
 
