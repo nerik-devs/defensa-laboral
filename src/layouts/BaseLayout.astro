@@ -1,0 +1,116 @@
+---
+/**
+ * BaseLayout — document shell shared by every page.
+ *
+ * Ported from the old Vite `index.html` head (title, meta, OG, favicon, fonts,
+ * theme color) with the fixes called out in ASTRO_MIGRATION_PLAN.md:
+ *   - `lang="es"` (was `es-MX`)
+ *   - favicon served from `/bredren_abogados_ico.png` (public/ root; the old
+ *     `public/...` relative path was broken)
+ *   - canonical + og:url derived from `site` in astro.config.mjs
+ *   - Twitter card meta added
+ *
+ * Also hosts the `[data-open-flow]` click delegation that opens the React flow
+ * island without hydrating any static section (see src/lib/flow-events.ts).
+ */
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Absolute or root-relative OG image URL. TODO(A4): ship a real 1200x630 asset. */
+  ogImage?: string;
+}
+
+const SITE_NAME = 'Bredren Abogados';
+const DEFAULT_TITLE = 'Bredren Abogados | Abogados Laborales en Mexico';
+const DEFAULT_DESCRIPTION =
+  'Expertos en defensa integral del trabajador y seguridad social. Despido injustificado, acoso laboral, pensiones y mas. Consulta gratuita por despido.';
+const KEYWORDS =
+  'abogado laboral, despido injustificado, acoso laboral, indemnizacion, derechos laborales, Mexico, CDMX';
+const THEME_COLOR = '#315682';
+
+const {
+  title = DEFAULT_TITLE,
+  description = DEFAULT_DESCRIPTION,
+  ogImage = '/bredren_abogados_ico.png',
+} = Astro.props;
+
+// `Astro.site` comes from astro.config.mjs `site`; fall back to the request URL in dev.
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
+const ogImageUrl = new URL(ogImage, Astro.site ?? Astro.url).href;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={KEYWORDS} />
+    <meta name="author" content="Defensa Laboral Pro" />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <!-- Favicon (served from public/) -->
+    <link rel="icon" type="image/png" href="/bredren_abogados_ico.png" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content={THEME_COLOR} />
+
+    <slot name="head" />
+  </head>
+
+  <body>
+    <slot />
+
+    {
+      /*
+       * Open-flow delegation.
+       * Static CTAs are plain HTML with a `data-open-flow` attribute (value = optional
+       * origin tag). One listener on `document` turns those clicks into the
+       * `defensa:open-flow` CustomEvent that FlowIsland (the only React island)
+       * subscribes to. No section needs hydration to open the modal.
+       * Astro bundles this processed <script> once per page as a tiny module.
+       */
+    }
+    <script>
+      import { OPEN_FLOW_ATTRIBUTE, dispatchOpenFlow } from '../lib/flow-events';
+
+      document.addEventListener('click', (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        const trigger = target.closest<HTMLElement>(`[${OPEN_FLOW_ATTRIBUTE}]`);
+        if (!trigger) return;
+        event.preventDefault();
+        dispatchOpenFlow({ source: trigger.getAttribute(OPEN_FLOW_ATTRIBUTE) || undefined });
+      });
+    </script>
+  </body>
+</html>

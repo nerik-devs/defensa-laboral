@@ -1,0 +1,37 @@
+---
+/**
+ * Landing page. Composes the static sections (zero JS, owned by A2) and mounts
+ * the single React island (owned by A3). Keep section order in sync with the
+ * old src/App.tsx until A4 removes it.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/sections/Navbar.astro';
+import Hero from '../components/sections/Hero.astro';
+import Services from '../components/sections/Services.astro';
+import Consultations from '../components/sections/Consultations.astro';
+import Testimonials from '../components/sections/Testimonials.astro';
+import Oath from '../components/sections/Oath.astro';
+import Urgency from '../components/sections/Urgency.astro';
+import Contact from '../components/sections/Contact.astro';
+import Footer from '../components/sections/Footer.astro';
+import FlowIsland from '../islands/FlowIsland';
+---
+
+<BaseLayout>
+  <div class="min-h-screen">
+    <Navbar />
+    <main>
+      <Hero />
+      <Services />
+      <Consultations />
+      <Testimonials />
+      <Oath />
+      <Urgency />
+      <Contact />
+    </main>
+    <Footer />
+  </div>
+
+  {/* The only hydrated component on the page. Opens on the `defensa:open-flow` event. */}
+  <FlowIsland client:idle />
+</BaseLayout>
