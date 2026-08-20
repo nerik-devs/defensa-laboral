@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
 import { Calculator, AlertCircle, ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react';
 import type { StepProps } from '../LaboralFlowModal';
 
@@ -22,25 +21,17 @@ const EstimationStep: React.FC<StepProps> = ({ onNext, onBack, data }) => {
   }, [data.employer.salary]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      className="flex flex-col h-full items-center justify-center text-center py-8"
+    <div
+      className="flow-step-enter flex flex-col h-full items-center justify-center text-center py-8"
     >
       {isCalculating ? (
         <div className="flex flex-col items-center justify-center space-y-6 flex-1 w-full">
           <div className="relative w-20 h-20">
-            <motion.div
-              className="absolute inset-0 rounded-full border-4 border-blue-100"
-            />
-            <motion.div
-              className="absolute inset-0 rounded-full border-4 border-blue-600 border-t-transparent flex items-center justify-center"
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-            >
+            <div className="absolute inset-0 rounded-full border-4 border-blue-100" />
+            <div className="absolute inset-0 rounded-full border-4 border-blue-600 border-t-transparent animate-spin" />
+            <div className="absolute inset-0 flex items-center justify-center">
               <Calculator className="w-8 h-8 text-blue-600 animate-pulse" />
-            </motion.div>
+            </div>
           </div>
           <div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">Calculando Estimación Preliminar</h3>
@@ -90,7 +81,7 @@ const EstimationStep: React.FC<StepProps> = ({ onNext, onBack, data }) => {
           <ChevronRight className="w-4 h-4" />
         </button>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

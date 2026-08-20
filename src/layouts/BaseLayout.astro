@@ -1,0 +1,216 @@
+---
+/**
+ * BaseLayout — document shell shared by every page.
+ *
+ * Ported from the old Vite `index.html` head (title, meta, OG, favicon, fonts,
+ * theme color) with the fixes called out in ASTRO_MIGRATION_PLAN.md:
+ *   - `lang="es"` (was `es-MX`)
+ *   - favicon served from `/bredren_abogados_ico.png` (public/ root; the old
+ *     `public/...` relative path was broken)
+ *   - canonical + og:url derived from `site` in astro.config.mjs
+ *   - Twitter card meta, og:image dimensions/alt
+ *   - JSON-LD LegalService/LocalBusiness built from the firm data shown in the
+ *     Contact and Footer sections (nothing invented; gaps are TODO-commented)
+ *   - Google Fonts loaded without render-blocking (preload + media swap)
+ *
+ * Also hosts the `[data-open-flow]` click delegation that opens the React flow
+ * island without hydrating any static section (see src/lib/flow-events.ts).
+ */
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /**
+   * Absolute or root-relative OG image URL. Defaults to the only raster brand
+   * asset in public/ (155x218 PNG). TODO: replace with a real 1200x630 asset
+   * once the firm provides one; social cards will look cropped until then.
+   */
+  ogImage?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
+}
+
+const SITE_NAME = 'Bredren Abogados';
+const DEFAULT_TITLE = 'Bredren Abogados | Abogados Laborales en México';
+// 150 chars — inside the 120-158 range search engines display without truncation.
+const DEFAULT_DESCRIPTION =
+  'Expertos en defensa integral del trabajador y seguridad social. Despido injustificado, acoso laboral, pensiones y más. Consulta gratuita por despido.';
+const KEYWORDS =
+  'abogado laboral, despido injustificado, acoso laboral, indemnización, derechos laborales, México, Torreón, Coahuila';
+const THEME_COLOR = '#315682';
+const GOOGLE_FONTS_URL =
+  'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap';
+
+const {
+  title = DEFAULT_TITLE,
+  description = DEFAULT_DESCRIPTION,
+  ogImage = '/bredren_abogados_ico.png',
+  ogImageWidth = 155,
+  ogImageHeight = 218,
+} = Astro.props;
+
+// `Astro.site` comes from astro.config.mjs `site`; fall back to the request URL in dev.
+const siteOrigin = Astro.site ?? Astro.url;
+const canonical = new URL(Astro.url.pathname, siteOrigin).href;
+const ogImageUrl = new URL(ogImage, siteOrigin).href;
+
+/*
+ * Firm data — mirrors what the Contact and Footer sections render. Keep both in
+ * sync; this is the only place search engines read the structured version.
+ */
+const FIRM = {
+  name: SITE_NAME,
+  telephone: '+52 871 779 5509',
+  email: 'contacto@bredrenabogados.com',
+  whatsapp: 'https://wa.me/528717795509',
+  address: {
+    streetAddress: 'Av. Allende 275 A Pte',
+    addressLocality: 'Torreón',
+    addressRegion: 'Coahuila',
+    // TODO: postal code is not shown anywhere on the site; add it once confirmed.
+    addressCountry: 'MX',
+  },
+  hasMap: 'https://maps.app.goo.gl/gVv76J4bR2sMwVtn8',
+  sameAs: [
+    'https://www.facebook.com/BredrenAbogados/',
+    'https://www.instagram.com/bredrenabogados/',
+    'https://x.com/BredrenAbogados',
+  ],
+  // TODO: `geo` (latitude/longitude) is not available; derive it from the map
+  // link once the firm confirms the exact pin.
+} as const;
+
+// LegalService is a schema.org subtype of LocalBusiness; declaring both types on
+// one node gives the local-business rich result without duplicating the entity.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': ['LegalService', 'LocalBusiness'],
+  '@id': new URL('/#organization', siteOrigin).href,
+  name: FIRM.name,
+  url: siteOrigin.href,
+  description: DEFAULT_DESCRIPTION,
+  image: ogImageUrl,
+  logo: ogImageUrl,
+  telephone: FIRM.telephone,
+  email: FIRM.email,
+  address: {
+    '@type': 'PostalAddress',
+    ...FIRM.address,
+  },
+  hasMap: FIRM.hasMap,
+  areaServed: { '@type': 'Country', name: 'México' },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '09:00',
+      closes: '19:00',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Saturday',
+      opens: '10:00',
+      closes: '14:00',
+    },
+  ],
+  contactPoint: [
+    {
+      '@type': 'ContactPoint',
+      contactType: 'customer service',
+      telephone: FIRM.telephone,
+      email: FIRM.email,
+      url: FIRM.whatsapp,
+      availableLanguage: 'es',
+      areaServed: 'MX',
+    },
+  ],
+  sameAs: FIRM.sameAs,
+};
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={KEYWORDS} />
+    <meta name="author" content={SITE_NAME} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content={String(ogImageWidth)} />
+    <meta property="og:image:height" content={String(ogImageHeight)} />
+    <meta property="og:image:alt" content={`Logotipo de ${SITE_NAME}`} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={`Logotipo de ${SITE_NAME}`} />
+
+    <!-- Favicon (served from public/) -->
+    <link rel="icon" type="image/png" href="/bredren_abogados_ico.png" />
+    <link rel="apple-touch-icon" href="/bredren_abogados_ico.png" />
+
+    <!--
+      Google Fonts, non render-blocking: preload the stylesheet, apply it once it
+      arrives (media swap), and keep a <noscript> fallback. Text renders with the
+      system fallback stack meanwhile (`display=swap`).
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href={GOOGLE_FONTS_URL} />
+    <link rel="stylesheet" href={GOOGLE_FONTS_URL} media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href={GOOGLE_FONTS_URL} /></noscript>
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content={THEME_COLOR} />
+
+    <!-- Structured data (LegalService + LocalBusiness) -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <slot name="head" />
+  </head>
+
+  <body>
+    <slot />
+
+    {
+      /*
+       * Open-flow delegation.
+       * Static CTAs are plain HTML with a `data-open-flow` attribute (value = optional
+       * origin tag). One listener on `document` turns those clicks into the
+       * `defensa:open-flow` CustomEvent that FlowIsland (the only React island)
+       * subscribes to. No section needs hydration to open the modal.
+       * Astro bundles this processed <script> once per page as a tiny module.
+       */
+    }
+    <script>
+      import { OPEN_FLOW_ATTRIBUTE, dispatchOpenFlow } from '../lib/flow-events';
+
+      document.addEventListener('click', (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        const trigger = target.closest<HTMLElement>(`[${OPEN_FLOW_ATTRIBUTE}]`);
+        if (!trigger) return;
+        event.preventDefault();
+        dispatchOpenFlow({ source: trigger.getAttribute(OPEN_FLOW_ATTRIBUTE) || undefined });
+      });
+    </script>
+  </body>
+</html>

@@ -1,15 +1,11 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Shield, AlertCircle, X, ChevronRight } from 'lucide-react';
 import type { StepProps } from '../LaboralFlowModal';
 
 const ConsentStep: React.FC<StepProps> = ({ onNext, onClose }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      className="flex flex-col h-full"
+    <div
+      className="flow-step-enter flex flex-col h-full"
     >
       <div className="flex justify-between items-start mb-6">
         <div>
@@ -50,7 +46,7 @@ const ConsentStep: React.FC<StepProps> = ({ onNext, onClose }) => {
           <ChevronRight className="w-4 h-4" />
         </button>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

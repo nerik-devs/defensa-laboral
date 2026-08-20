@@ -1,0 +1,191 @@
+---
+/**
+ * Hero section — static Astro port of src/components/Hero.tsx.
+ * Zero React/framer-motion: entrance animations, ambient shapes and the arrow
+ * nudge are CSS keyframes (disabled under prefers-reduced-motion). The primary
+ * CTA opens the intake flow via `data-open-flow="hero"`.
+ */
+const stats = [
+  { icon: 'shield', value: '500+', label: 'Casos Ganados' },
+  { icon: 'award', value: '15+', label: 'Años de Experiencia' },
+  { icon: 'clock', value: '24/7', label: 'Disponibilidad' },
+];
+---
+
+<section id="inicio" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  {/* Background */}
+  <div class="absolute inset-0 gradient-primary" />
+  <div
+    class="absolute inset-0 opacity-10"
+    style="background-image: url(&quot;data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E&quot;)"
+  />
+
+  {/* Animated Shapes (CSS keyframes replace framer-motion pulse loops) */}
+  <div class="shape-a absolute top-20 left-10 w-72 h-72 bg-white/10 rounded-full blur-3xl" aria-hidden="true" />
+  <div class="shape-b absolute bottom-20 right-10 w-96 h-96 bg-primary-400/20 rounded-full blur-3xl" aria-hidden="true" />
+
+  {/* Content */}
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+    <div class="text-center">
+      {/* Badge */}
+      <div class="anim-fade-up anim-delay-0 inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/90 text-sm font-medium mb-8">
+        <span class="w-2 h-2 bg-green-400 rounded-full pulse-dot" />
+        Consulta Gratuita por Despido
+      </div>
+
+      {/* Main Headline */}
+      <h1 class="anim-fade-up anim-delay-1 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 leading-tight">
+        <span class="block">¿Vulneraron tus</span>
+        <span class="block text-primary-200">Derechos Laborales?</span>
+      </h1>
+
+      {/* Subtitle */}
+      <p class="anim-fade-up anim-delay-2 text-xl sm:text-2xl text-white/80 max-w-3xl mx-auto mb-12 text-balance">
+        Expertos en <span class="text-white font-semibold">defensa integral del trabajador</span> y seguridad social.
+        Luchamos por lo que te corresponde.
+      </p>
+
+      {/* CTA Buttons */}
+      <div class="anim-fade-up anim-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+        <button
+          type="button"
+          data-open-flow="hero"
+          class="group w-full sm:w-auto px-8 py-4 bg-white text-primary-700 font-bold text-lg rounded-full shadow-2xl hover:shadow-white/25 transition-all flex items-center justify-center gap-3 cursor-pointer"
+        >
+          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+          </svg>
+          Primeros Auxilios Laborales
+          <span class="arrow-nudge inline-block" aria-hidden="true">
+            →
+          </span>
+        </button>
+        <a
+          href="tel:+528717795509"
+          class="w-full sm:w-auto px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold text-lg rounded-full border-2 border-white/30 hover:bg-white/20 transition-all flex items-center justify-center gap-3"
+        >
+          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+          </svg>
+          871-779-5509
+        </a>
+      </div>
+
+      {/* Stats */}
+      <div class="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
+        {stats.map((stat, index) => (
+          <div class={`anim-fade-up anim-delay-${5 + index} text-center`}>
+            <div class="inline-flex items-center justify-center w-12 h-12 bg-white/10 rounded-xl mb-3">
+              {stat.icon === 'shield' && (
+                <svg class="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+                </svg>
+              )}
+              {stat.icon === 'award' && (
+                <svg class="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="8" r="6" />
+                  <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
+                </svg>
+              )}
+              {stat.icon === 'clock' && (
+                <svg class="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+              )}
+            </div>
+            <div class="text-3xl sm:text-4xl font-bold text-white mb-1">{stat.value}</div>
+            <div class="text-sm text-white/70">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  {/* Scroll Indicator (anchor link replaces the old JS scrollTo) */}
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2">
+    <a href="#servicios" class="block cursor-pointer" aria-label="Ir a Servicios">
+      <div class="scroll-bounce w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-2">
+        <div class="scroll-dot w-1.5 h-1.5 bg-white rounded-full" />
+      </div>
+    </a>
+  </div>
+</section>
+
+<style>
+  /* Entrance fade-up (replaces framer-motion initial/animate) */
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .anim-fade-up {
+    animation: fade-up 0.6s ease-out both;
+  }
+  .anim-delay-0 { animation-delay: 0s; }
+  .anim-delay-1 { animation-delay: 0.1s; }
+  .anim-delay-2 { animation-delay: 0.2s; }
+  .anim-delay-3 { animation-delay: 0.3s; }
+  .anim-delay-4 { animation-delay: 0.4s; }
+  .anim-delay-5 { animation-delay: 0.5s; }
+  .anim-delay-6 { animation-delay: 0.6s; }
+  .anim-delay-7 { animation-delay: 0.7s; }
+
+  /* Ambient shapes (replaces framer-motion infinite scale/opacity loops) */
+  @keyframes shape-a-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.2); opacity: 0.5; }
+  }
+  .shape-a {
+    animation: shape-a-pulse 8s ease-in-out infinite;
+  }
+  @keyframes shape-b-pulse {
+    0%, 100% { transform: scale(1.2); opacity: 0.4; }
+    50% { transform: scale(1); opacity: 0.2; }
+  }
+  .shape-b {
+    animation: shape-b-pulse 10s ease-in-out infinite;
+  }
+
+  /* Arrow nudge (replaces framer-motion x loop) */
+  @keyframes arrow-nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(5px); }
+  }
+  .arrow-nudge {
+    animation: arrow-nudge 1.5s ease-in-out infinite;
+  }
+
+  /* Scroll indicator (replaces framer-motion y loop) */
+  @keyframes scroll-dot {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(12px); }
+  }
+  .scroll-dot {
+    animation: scroll-dot 2s ease-in-out infinite;
+  }
+  @keyframes scroll-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+  }
+  .scroll-bounce {
+    animation: scroll-bounce 2s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .anim-fade-up,
+    .shape-a,
+    .shape-b,
+    .arrow-nudge,
+    .scroll-dot,
+    .scroll-bounce,
+    .pulse-dot {
+      animation: none;
+    }
+  }
+</style>

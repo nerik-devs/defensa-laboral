@@ -1,0 +1,169 @@
+---
+/**
+ * Urgency section — static Astro port of src/components/Urgency.tsx.
+ * Zero React/framer-motion: ambient shapes and the arrow nudge are CSS
+ * keyframes (reduced-motion aware). The primary CTA pointed to #contacto in
+ * the old code; per the migration plan (finding D6) it now opens the intake
+ * flow via `data-open-flow="urgency"`.
+ */
+---
+
+<section id="urgencia" class="py-20 gradient-dark relative overflow-hidden">
+  {/* Animated Background (CSS keyframes replace framer-motion loops) */}
+  <div class="absolute inset-0" aria-hidden="true">
+    <div class="urg-shape-a absolute top-0 left-1/4 w-96 h-96 bg-primary-600/20 rounded-full blur-3xl" />
+    <div class="urg-shape-b absolute bottom-0 right-1/4 w-80 h-80 bg-accent-500/20 rounded-full blur-3xl" />
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <div class="text-center">
+      {/* Alert Badge */}
+      <div class="anim-fade-up anim-delay-0 inline-flex items-center gap-2 px-4 py-2 bg-accent-500/20 border border-accent-500/30 rounded-full mb-8">
+        <svg class="w-5 h-5 text-accent-400 animate-pulse" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+          <path d="M12 9v4" />
+          <path d="M12 17h.01" />
+        </svg>
+        <span class="text-accent-300 font-medium">Urgente</span>
+      </div>
+
+      {/* Headline */}
+      <h2 class="anim-fade-up anim-delay-1 text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-white mb-6">
+        <svg class="inline-block w-10 h-10 text-accent-400 mr-3 -mt-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+        Cada Día de Espera <span class="text-accent-400">Fortalece a tu Ex-Patrón</span>
+      </h2>
+
+      <p class="anim-fade-up anim-delay-2 text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+        Mientras tú dudas, ellos preparan su defensa.
+        <br />
+        <span class="text-white font-semibold">No dejes que ganen por abandono.</span>
+      </p>
+
+      {/* Reasons Grid */}
+      <div class="grid md:grid-cols-3 gap-6 mb-12">
+        {/* Plazos Legales */}
+        <div class="anim-fade-up anim-delay-0 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-left hover:bg-white/10 transition-colors">
+          <div class="w-12 h-12 bg-accent-500/20 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-accent-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Plazos Legales</h3>
+          <p class="text-gray-400 text-sm">Tienes solo 2 meses para demandar después de un despido. Cada día cuenta.</p>
+        </div>
+
+        {/* Evidencia se Pierde */}
+        <div class="anim-fade-up anim-delay-1 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-left hover:bg-white/10 transition-colors">
+          <div class="w-12 h-12 bg-accent-500/20 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-accent-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="22 17 13.5 8.5 8.5 13.5 2 7" />
+              <polyline points="16 17 22 17 22 11" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Evidencia se Pierde</h3>
+          <p class="text-gray-400 text-sm">Testigos olvidan, documentos desaparecen. Mientras más esperas, más débil tu caso.</p>
+        </div>
+
+        {/* Patrón se Prepara */}
+        <div class="anim-fade-up anim-delay-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-left hover:bg-white/10 transition-colors">
+          <div class="w-12 h-12 bg-accent-500/20 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-accent-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+              <path d="M12 8v4" />
+              <path d="M12 16h.01" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Patrón se Prepara</h3>
+          <p class="text-gray-400 text-sm">Mientras tu dudas, ellos construyen su defensa con abogados corporativos.</p>
+        </div>
+      </div>
+
+      {/* CTA */}
+      <div class="anim-fade-up anim-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <button
+          type="button"
+          data-open-flow="urgency"
+          class="group px-8 py-4 bg-accent-500 text-white font-bold text-lg rounded-full shadow-lg shadow-accent-500/30 hover:bg-accent-600 transition-colors flex items-center gap-3 cursor-pointer"
+        >
+          <span>Actúa Ahora - Consulta Gratuita</span>
+          <span class="arrow-nudge inline-block" aria-hidden="true">
+            →
+          </span>
+        </button>
+        <a
+          href="tel:+528717795509"
+          class="px-8 py-4 text-white/80 hover:text-white font-medium transition-colors"
+        >
+          o llama al 871-779-5509
+        </a>
+      </div>
+
+      {/* Reminder */}
+      <div class="anim-fade-up anim-delay-4 mt-12 text-gray-500 text-sm">
+        <span class="text-accent-400 font-semibold">Recuerda:</span>{' '}
+        El plazo legal para demandar es de solo 60 días después del despido
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Entrance fade-up (replaces framer-motion whileInView) */
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .anim-fade-up {
+    animation: fade-up 0.5s ease-out both;
+  }
+  .anim-delay-0 { animation-delay: 0s; }
+  .anim-delay-1 { animation-delay: 0.1s; }
+  .anim-delay-2 { animation-delay: 0.2s; }
+  .anim-delay-3 { animation-delay: 0.3s; }
+  .anim-delay-4 { animation-delay: 0.4s; }
+
+  /* Ambient shapes (replaces framer-motion infinite scale/opacity loops) */
+  @keyframes urg-shape-a-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.2); opacity: 0.5; }
+  }
+  .urg-shape-a {
+    animation: urg-shape-a-pulse 6s ease-in-out infinite;
+  }
+  @keyframes urg-shape-b-pulse {
+    0%, 100% { transform: scale(1.2); opacity: 0.4; }
+    50% { transform: scale(1); opacity: 0.2; }
+  }
+  .urg-shape-b {
+    animation: urg-shape-b-pulse 8s ease-in-out infinite;
+  }
+
+  /* Arrow nudge (replaces framer-motion x loop) */
+  @keyframes arrow-nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(5px); }
+  }
+  .arrow-nudge {
+    animation: arrow-nudge 1s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .anim-fade-up,
+    .urg-shape-a,
+    .urg-shape-b,
+    .arrow-nudge,
+    .animate-pulse {
+      animation: none;
+    }
+  }
+</style>

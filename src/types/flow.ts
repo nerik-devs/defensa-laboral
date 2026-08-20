@@ -30,6 +30,14 @@ export interface EmployerData {
   employerColonia: string;
   employerCalle: string;
   employerNumero: string;
+  /** Employer (citado) postal code — 5 digits; SINACOL needs it, the worker CP is never reused. */
+  employerCodigoPostal: string;
+  /** Pay periodicity: "Semanal" | "Quincenal" | "Mensual". Default "Mensual". */
+  periodicidad: string;
+  /** Weekly hours (digits, 1-84). Default "48". */
+  horasSemanales: string;
+  /** Shift: "Diurna" | "Nocturna" | "Mixta". Default "Diurna". */
+  jornada: string;
 }
 
 export interface ProblemData {
@@ -44,9 +52,12 @@ export interface FlowState {
   worker: WorkerData;
   employer: EmployerData;
   problem: ProblemData;
+  /** Honeypot field — must stay empty for humans; a non-empty value marks a bot. */
+  website: string;
 }
 
 export const initialFlowState: FlowState = {
+  website: '',
   worker: {
     name: '',
     primerApellido: '',
@@ -78,6 +89,10 @@ export const initialFlowState: FlowState = {
     employerColonia: '',
     employerCalle: '',
     employerNumero: '',
+    employerCodigoPostal: '',
+    periodicidad: 'Mensual',
+    horasSemanales: '48',
+    jornada: 'Diurna',
   },
   problem: {
     problemType: '',
