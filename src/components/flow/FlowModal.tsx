@@ -4,11 +4,10 @@ import { X } from 'lucide-react';
 /**
  * Framer-free modal shell for the intake flow.
  *
- * Same markup, classes and behavior as the legacy `src/components/ui/Modal.tsx`
- * (body scroll lock, backdrop click closes, optional header/close button), but
- * the enter animation is plain CSS (see flow.css) so the FlowIsland bundle does
- * not ship framer-motion. The legacy ui/Modal becomes dead code once nothing
- * else imports it (A4 cleanup).
+ * Same markup, classes and behavior as the old framer-motion `ui/Modal` of the
+ * Vite SPA (body scroll lock, backdrop click closes, optional header/close
+ * button), but the enter animation is plain CSS (see flow.css) so the
+ * FlowIsland bundle does not ship framer-motion.
  */
 interface ModalProps {
   isOpen: boolean;
