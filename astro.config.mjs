@@ -16,8 +16,10 @@ export default defineConfig({
 
   integrations: [react(), sitemap()],
 
-  // Opt-in prefetch for internal links (see plan item 8).
-  prefetch: true,
+  // Prefetch is intentionally OFF: the site is a single page whose links are
+  // all same-page anchors, so the prefetch runtime would be a dead ~2.5 kB
+  // script. Turn it on when a second route exists.
+  prefetch: false,
 
   vite: {
     // Tailwind 4 runs through its Vite plugin; tokens live in src/styles/global.css.
