@@ -1,12 +1,215 @@
 ---
 /**
- * Navbar section — STUB created by A1.
- * OWNER: A2. Port from src/components/Navbar.tsx (zero JS, astro:assets for images,
- * CTAs that open the intake flow must use `data-open-flow` — see src/lib/flow-events.ts).
+ * Navbar section — static Astro port of src/components/Navbar.tsx.
+ * Zero React/framer-motion: the scroll-aware background is replaced by a static
+ * "scrolled" style and the slide-in uses a CSS keyframe. The mobile menu is the
+ * only inline <script> on the page (no framework). The desktop CTA and the
+ * mobile CTA open the intake flow via `data-open-flow` (see src/lib/flow-events.ts).
  */
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+// This toolchain (Astro 7.2.4 + Vite 8.2.2/Rolldown) fails to resolve any
+// asset import (`import`, `?url`, `import.meta.glob`, CSS url()) and leaks
+// file:// URLs from `new URL(..., import.meta.url)` into prerendered HTML.
+// Inline data URLs computed at build time bypass the broken asset pipeline
+// entirely. The logo is emitted as an explicit-width/height <img>.
+const logo = `data:image/webp;base64,${readFileSync(
+  join(process.cwd(), 'src/assets/bredren-abogados-logo.webp'),
+  'base64'
+)}`;
+
+const navLinks = [
+  { name: 'Inicio', href: '#inicio' },
+  { name: 'Servicios', href: '#servicios' },
+  { name: 'Consultas', href: '#consultas' },
+  { name: 'Testimonios', href: '#testimonios' },
+  { name: 'Contacto', href: '#contacto' },
+];
 ---
 
-<!-- TODO(A2): port src/components/Navbar.tsx -->
-<header id="navbar">
-  <!-- Navbar placeholder -->
+<header
+  id="navbar"
+  class="navbar-in fixed top-0 z-50 w-full bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 py-2"
+>
+  <div class="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
+    {/* Logo */}
+    <a href="#inicio" class="flex items-center gap-3 group" aria-label="Bredren Abogados - Inicio">
+      <img
+        src={logo}
+        alt="Bredren Abogados logo"
+        width={336}
+        height={185}
+        class="md:w-35 w-28 h-auto"
+      />
+    </a>
+
+    {/* Desktop Navigation */}
+    <nav class="hidden md:flex gap-8" aria-label="Navegación principal">
+      {navLinks.slice(0, 4).map((link) => (
+        <a
+          href={link.href}
+          class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors"
+        >
+          {link.name}
+        </a>
+      ))}
+    </nav>
+
+    {/* Desktop CTA Button */}
+    <button
+      type="button"
+      data-open-flow="navbar"
+      class="hidden md:inline-flex items-center justify-center rounded-full bg-brand-600 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-brand-600/20 transition-all hover:bg-brand-700 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-700 focus-visible:ring-offset-2 cursor-pointer"
+    >
+      Consulta Gratis
+    </button>
+
+    {/* Mobile Menu Button */}
+    <button
+      type="button"
+      id="mobile-menu-toggle"
+      class="md:hidden relative z-50 p-2 -mr-2 text-gray-700 hover:text-brand-600 transition-colors cursor-pointer"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="4" x2="20" y1="6" y2="6" />
+        <line x1="4" x2="20" y1="12" y2="12" />
+        <line x1="4" x2="20" y1="18" y2="18" />
+      </svg>
+    </button>
+  </div>
 </header>
+
+{/* Mobile Menu Overlay */}
+<div
+  id="mobile-menu"
+  class="mobile-menu fixed inset-0 z-40"
+  aria-hidden="true"
+>
+  {/* Backdrop */}
+  <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" data-close-mobile />
+
+  {/* Menu Panel */}
+  <nav class="absolute right-0 top-0 h-full w-4/5 max-w-sm bg-white shadow-2xl mobile-panel" aria-label="Menú móvil">
+    <div class="flex flex-col h-full pt-24 px-6 pb-8">
+      {/* Nav Links */}
+      <div class="space-y-2">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="block py-4 px-4 text-lg font-medium text-gray-800 hover:text-brand-600 hover:bg-brand-50 rounded-xl transition-all"
+          >
+            {link.name}
+          </a>
+        ))}
+      </div>
+
+      {/* CTA Button */}
+      <div class="mt-auto">
+        <button
+          type="button"
+          data-open-flow="navbar"
+          class="block w-full py-4 px-6 text-center rounded-xl bg-gradient-to-r from-brand-600 to-brand-700 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all cursor-pointer"
+        >
+          Consulta Gratis
+        </button>
+        <p class="text-center text-sm text-gray-500 mt-4">
+          ¿Dudas? Llámanos al{' '}
+          <a href="tel:+528717795509" class="text-brand-600 font-medium">
+            (871) 779 5509
+          </a>
+        </p>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<style>
+  /* Header slide-in (replaces framer-motion y: -100 -> 0) */
+  @keyframes navbar-in {
+    from {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .navbar-in {
+    animation: navbar-in 0.4s ease-out both;
+  }
+
+  /* Mobile menu visibility */
+  .mobile-menu {
+    display: none;
+  }
+  .mobile-menu.open {
+    display: block;
+  }
+  @media (min-width: 768px) {
+    .mobile-menu {
+      display: none;
+    }
+  }
+
+  /* Panel slide-in (replaces framer-motion x: 100% -> 0) */
+  @keyframes mobile-panel-in {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  .mobile-menu.open .mobile-panel {
+    animation: mobile-panel-in 0.25s ease-out;
+  }
+
+  /* Backdrop fade (replaces framer-motion opacity) */
+  @keyframes mobile-backdrop-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .mobile-menu.open > div[data-close-mobile] {
+    animation: mobile-backdrop-in 0.2s ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .navbar-in,
+    .mobile-menu.open .mobile-panel,
+    .mobile-menu.open > div[data-close-mobile] {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  // Mobile nav toggle — the only inline script on the page (no framework).
+  const toggle = document.getElementById('mobile-menu-toggle')!;
+  const menu = document.getElementById('mobile-menu')!;
+  const closeMenu = () => {
+    menu.classList.remove('open');
+    menu.setAttribute('aria-hidden', 'true');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Abrir menú');
+    document.body.style.overflow = '';
+  };
+  toggle.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    menu.setAttribute('aria-hidden', String(!open));
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  menu.querySelectorAll('a, [data-open-flow], [data-close-mobile]').forEach((el) => {
+    el.addEventListener('click', closeMenu);
+  });
+</script>

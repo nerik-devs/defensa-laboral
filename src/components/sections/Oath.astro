@@ -1,12 +1,171 @@
 ---
 /**
- * Oath section — STUB created by A1.
- * OWNER: A2. Port from src/components/Oath.tsx (zero JS, astro:assets for images,
- * CTAs that open the intake flow must use `data-open-flow` — see src/lib/flow-events.ts).
+ * Oath section — static Astro port of src/components/Oath.tsx.
+ * Zero React/framer-motion: entrance fades and the icon hover scale are CSS
+ * (reduced-motion aware).
  */
 ---
 
-<!-- TODO(A2): port src/components/Oath.tsx -->
-<section id="juramento">
-  <!-- Oath placeholder -->
+<section id="juramento" class="py-24 bg-white relative overflow-hidden">
+  {/* Background Pattern */}
+  <div class="absolute inset-0 opacity-5" aria-hidden="true">
+    <div
+      class="absolute inset-0"
+      style="background-image: url(&quot;data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0L100 50L50 100L0 50Z' fill='%23c12872' fill-opacity='0.4'/%3E%3C/svg%3E&quot;); background-size: 50px 50px;"
+    />
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <div class="max-w-4xl mx-auto text-center">
+      {/* Header */}
+      <div class="anim-fade-up anim-delay-0">
+        <span class="inline-block px-4 py-1.5 bg-accent-100 text-accent-600 text-sm font-semibold rounded-full mb-4">
+          Nuestro Compromiso
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-accent-500 mb-8">
+          Juramento al Trabajador
+        </h2>
+      </div>
+
+      {/* Values */}
+      <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
+        {/* Lealtad Inquebrantable */}
+        <div class="anim-fade-up anim-delay-0 group">
+          <div class="flex flex-col items-center p-6 bg-gray-50 rounded-2xl hover:bg-primary-50 transition-colors">
+            <div class="w-16 h-16 bg-white rounded-xl shadow-md flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:scale-110 transition-all">
+              <svg class="w-8 h-8 text-primary-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+              </svg>
+            </div>
+            <h3 class="font-bold text-gray-900 mb-1">Lealtad Inquebrantable</h3>
+            <p class="text-sm text-gray-500">a tus intereses</p>
+          </div>
+        </div>
+
+        {/* Veracidad Absoluta */}
+        <div class="anim-fade-up anim-delay-1 group">
+          <div class="flex flex-col items-center p-6 bg-gray-50 rounded-2xl hover:bg-primary-50 transition-colors">
+            <div class="w-16 h-16 bg-white rounded-xl shadow-md flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:scale-110 transition-all">
+              <svg class="w-8 h-8 text-primary-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </div>
+            <h3 class="font-bold text-gray-900 mb-1">Veracidad Absoluta</h3>
+            <p class="text-sm text-gray-500">en cada actualización</p>
+          </div>
+        </div>
+
+        {/* Coraje Legal */}
+        <div class="anim-fade-up anim-delay-2 group">
+          <div class="flex flex-col items-center p-6 bg-gray-50 rounded-2xl hover:bg-primary-50 transition-colors">
+            <div class="w-16 h-16 bg-white rounded-xl shadow-md flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:scale-110 transition-all">
+              <svg class="w-8 h-8 text-primary-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5" />
+                <line x1="13" x2="19" y1="19" y2="13" />
+                <line x1="16" x2="20" y1="16" y2="20" />
+                <line x1="19" x2="21" y1="21" y2="19" />
+              </svg>
+            </div>
+            <h3 class="font-bold text-gray-900 mb-1">Coraje Legal</h3>
+            <p class="text-sm text-gray-500">para enfrentar cualquier empresa</p>
+          </div>
+        </div>
+
+        {/* Respeto Total */}
+        <div class="anim-fade-up anim-delay-3 group">
+          <div class="flex flex-col items-center p-6 bg-gray-50 rounded-2xl hover:bg-primary-50 transition-colors">
+            <div class="w-16 h-16 bg-white rounded-xl shadow-md flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:scale-110 transition-all">
+              <svg class="w-8 h-8 text-primary-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m11 17 2 2a1 1 0 1 0 3-3" />
+                <path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" />
+                <path d="m21 3 1 11h-2" />
+                <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" />
+                <path d="M3 4h8" />
+              </svg>
+            </div>
+            <h3 class="font-bold text-gray-900 mb-1">Respeto Total</h3>
+            <p class="text-sm text-gray-500">a tu tiempo y situación</p>
+          </div>
+        </div>
+
+        {/* Justicia Real */}
+        <div class="anim-fade-up anim-delay-4 group">
+          <div class="flex flex-col items-center p-6 bg-gray-50 rounded-2xl hover:bg-primary-50 transition-colors">
+            <div class="w-16 h-16 bg-white rounded-xl shadow-md flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:scale-110 transition-all">
+              <svg class="w-8 h-8 text-primary-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
+                <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
+                <path d="M7 21h10" />
+                <path d="M12 3v18" />
+                <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" />
+              </svg>
+            </div>
+            <h3 class="font-bold text-gray-900 mb-1">Justicia Real</h3>
+            <p class="text-sm text-gray-500">sin compromisos</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Quote */}
+      <div class="anim-fade-up anim-delay-2 relative">
+        <div class="absolute -top-4 left-1/2 -translate-x-1/2 text-8xl text-primary-200 font-serif" aria-hidden="true">
+          "
+        </div>
+        <blockquote class="text-2xl sm:text-3xl font-display text-gray-800 italic pt-8">
+          No somos abogados cualquiera.
+          <br />
+          <span class="text-primary-600 font-semibold">
+            Somos defensores laborales.
+          </span>
+        </blockquote>
+      </div>
+
+      {/* Signature Line */}
+      <div class="anim-fade-up anim-delay-3 mt-12 flex items-center justify-center gap-4">
+        <div class="w-16 h-px bg-gray-300" />
+        <div class="flex items-center gap-2">
+          <svg class="w-6 h-6 text-primary-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
+            <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
+            <path d="M7 21h10" />
+            <path d="M12 3v18" />
+            <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" />
+          </svg>
+          <span class="text-gray-600 font-medium">
+            Bredren Abogados
+          </span>
+        </div>
+        <div class="w-16 h-px bg-gray-300" />
+      </div>
+    </div>
+  </div>
 </section>
+
+<style>
+  /* Entrance fade-up (replaces framer-motion whileInView) */
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .anim-fade-up {
+    animation: fade-up 0.5s ease-out both;
+  }
+  .anim-delay-0 { animation-delay: 0s; }
+  .anim-delay-1 { animation-delay: 0.1s; }
+  .anim-delay-2 { animation-delay: 0.2s; }
+  .anim-delay-3 { animation-delay: 0.3s; }
+  .anim-delay-4 { animation-delay: 0.4s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .anim-fade-up {
+      animation: none;
+    }
+  }
+</style>

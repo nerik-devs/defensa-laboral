@@ -1,12 +1,249 @@
 ---
 /**
- * Contact section — STUB created by A1.
- * OWNER: A2. Port from src/components/Contact.tsx (zero JS, astro:assets for images,
- * CTAs that open the intake flow must use `data-open-flow` — see src/lib/flow-events.ts).
+ * Contact section — static Astro port of src/components/Contact.tsx.
+ * Zero React/framer-motion. The old contact form faked submission (fake await,
+ * sent nothing — improvement-plan finding D6) so it is NOT reproduced: the
+ * right column now offers real contact options (WhatsApp deep link, tel:,
+ * mailto:) plus a `data-open-flow` button labeled "Inicia tu caso". No fake
+ * spinners.
  */
 ---
 
-<!-- TODO(A2): port src/components/Contact.tsx -->
-<section id="contacto">
-  <!-- Contact placeholder -->
+<section id="contacto" class="py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {/* Header */}
+    <div class="anim-fade-up text-center mb-16">
+      <span class="inline-block px-4 py-1.5 bg-primary-100 text-primary-700 text-sm font-semibold rounded-full mb-4">
+        Contacto
+      </span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-gray-900 mb-6">
+        Tu Primera Consulta es <span class="text-primary-600">Gratuita</span>
+      </h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Cuéntanos tu situación y un abogado especialista te contactará en
+        menos de 24 horas.
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-5 gap-12">
+      {/* Contact Info */}
+      <div class="anim-fade-left lg:col-span-2">
+        <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 h-full">
+          <h3 class="text-2xl font-bold text-gray-900 mb-6">
+            Información de Contacto
+          </h3>
+
+          <div class="space-y-6 mb-8">
+            {/* Teléfono */}
+            <a href="tel:+528717795509" class="flex items-start gap-4 group">
+              <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center group-hover:bg-primary-600 transition-colors">
+                <svg class="w-6 h-6 text-primary-600 group-hover:text-white transition-colors" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+              </div>
+              <div>
+                <div class="text-sm text-gray-500">Teléfono</div>
+                <div class="font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">
+                  8717795509
+                </div>
+              </div>
+            </a>
+
+            {/* WhatsApp */}
+            <a href="https://wa.me/528717795509" class="flex items-start gap-4 group">
+              <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center group-hover:bg-primary-600 transition-colors">
+                <svg class="w-6 h-6 text-primary-600 group-hover:text-white transition-colors" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                </svg>
+              </div>
+              <div>
+                <div class="text-sm text-gray-500">WhatsApp</div>
+                <div class="font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">
+                  8717795509
+                </div>
+              </div>
+            </a>
+
+            {/* Email */}
+            <a href="mailto:contacto@bredrenabogados.com" class="flex items-start gap-4 group">
+              <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center group-hover:bg-primary-600 transition-colors">
+                <svg class="w-6 h-6 text-primary-600 group-hover:text-white transition-colors" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect width="20" height="16" x="2" y="4" rx="2" />
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                </svg>
+              </div>
+              <div>
+                <div class="text-sm text-gray-500">Email</div>
+                <div class="font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">
+                  contacto@bredrenabogados.com
+                </div>
+              </div>
+            </a>
+
+            {/* Oficina */}
+            <a href="https://maps.app.goo.gl/gVv76J4bR2sMwVtn8" target="_blank" rel="noopener noreferrer" class="flex items-start gap-4 group">
+              <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center group-hover:bg-primary-600 transition-colors">
+                <svg class="w-6 h-6 text-primary-600 group-hover:text-white transition-colors" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+              </div>
+              <div>
+                <div class="text-sm text-gray-500">Oficina</div>
+                <div class="font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">
+                  Av Allende 275 A, Torreón, Coah.
+                </div>
+              </div>
+            </a>
+          </div>
+
+          {/* Hours */}
+          <div class="bg-gray-50 rounded-2xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <svg class="w-5 h-5 text-primary-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              <h4 class="font-semibold text-gray-900">
+                Horario de Atención
+              </h4>
+            </div>
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between">
+                <span class="text-gray-600">Lunes - Viernes</span>
+                <span class="font-medium text-gray-900">9:00 - 19:00</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Sábado</span>
+                <span class="font-medium text-gray-900">10:00 - 14:00</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Urgencias 24/7</span>
+                <span class="font-medium text-primary-600">Disponible</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Contact Options (replaces the fake submission form — finding D6) */}
+      <div class="anim-fade-right lg:col-span-3">
+        <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">
+            Inicia tu Caso
+          </h3>
+          <p class="text-gray-600 mb-8">
+            Elige el canal que prefieras y un abogado especialista te contactará
+            en menos de 24 horas.
+          </p>
+
+          <div class="space-y-4 mb-8">
+            {/* WhatsApp deep link */}
+            <a
+              href="https://wa.me/528717795509"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-4 w-full px-6 py-4 rounded-xl bg-green-500 text-white font-bold text-lg hover:bg-green-600 transition-colors shadow-lg shadow-green-500/30"
+            >
+              <svg class="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
+              Escríbenos por WhatsApp
+            </a>
+
+            {/* Phone */}
+            <a
+              href="tel:+528717795509"
+              class="flex items-center gap-4 w-full px-6 py-4 rounded-xl bg-primary-600 text-white font-bold text-lg hover:bg-primary-700 transition-colors shadow-lg shadow-primary-600/30"
+            >
+              <svg class="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+              Llámanos al (871) 779 5509
+            </a>
+
+            {/* Email */}
+            <a
+              href="mailto:contacto@bredrenabogados.com"
+              class="flex items-center gap-4 w-full px-6 py-4 rounded-xl border-2 border-gray-200 text-gray-800 font-semibold text-lg hover:border-primary-500 hover:text-primary-700 transition-colors"
+            >
+              <svg class="w-6 h-6 text-primary-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="20" height="16" x="2" y="4" rx="2" />
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+              </svg>
+              contacto@bredrenabogados.com
+            </a>
+          </div>
+
+          {/* Intake flow CTA */}
+          <div class="text-center">
+            <button
+              type="button"
+              data-open-flow="contact"
+              class="w-full flex items-center justify-center gap-3 px-8 py-4 bg-primary-600 text-white font-bold text-lg rounded-xl hover:bg-primary-700 transition-colors shadow-lg shadow-primary-600/30 cursor-pointer"
+            >
+              <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+              </svg>
+              Inicia tu caso
+            </button>
+            <p class="text-sm text-gray-500 mt-4">
+              Responde un breve cuestionario y recibe tu diagnóstico sin costo.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
+
+<style>
+  /* Entrance fades (replaces framer-motion whileInView) */
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .anim-fade-up {
+    animation: fade-up 0.6s ease-out both;
+  }
+  @keyframes fade-left {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  .anim-fade-left {
+    animation: fade-left 0.6s ease-out both;
+  }
+  @keyframes fade-right {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  .anim-fade-right {
+    animation: fade-right 0.6s ease-out both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .anim-fade-up,
+    .anim-fade-left,
+    .anim-fade-right {
+      animation: none;
+    }
+  }
+</style>
