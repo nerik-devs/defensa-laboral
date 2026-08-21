@@ -1,0 +1,12 @@
+# Keep the Docker build context minimal: everything listed here is NOT sent
+# to the Docker daemon, which makes builds faster and layer caching stable.
+node_modules
+dist
+.astro
+.git
+.env
+.env.*
+!.env.example
+*.md
+.vscode
+.atl
