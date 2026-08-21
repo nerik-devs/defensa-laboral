@@ -8,7 +8,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   // TODO(A4): confirm the real production domain before go-live.
   // `site` drives the sitemap, canonical URLs and absolute OG URLs in BaseLayout.
-  site: 'https://www.defensalaboralpro.com',
+  site: 'https://defensalaboral-preview.nerik.mx', // TODO: switch to the firm's final domain at go-live
 
   // Static output (default): every page is prerendered to HTML and served by
   // `serve -s dist` on Coolify. Only the FlowIsland React island ships JS.
