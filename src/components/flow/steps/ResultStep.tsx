@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { CheckCircle, FileText, CalendarCheck, HelpCircle, Loader2, AlertCircle, ArrowLeft, RefreshCw } from 'lucide-react';
 import type { StepProps } from '../LaboralFlowModal';
+import { parseFieldErrors, type FieldError } from '../../../lib/server-errors';
 
 type SinacolStatus = 'loading' | 'success' | 'error';
-
-interface FieldError {
-  /** CRM field path, e.g. worker.curp, employer.employerCalle, problem.problemType. */
-  field: string;
-  message: string;
-  /** Flow step index that owns this field (1 = worker, 2 = employer, 3 = problem); 0 when unknown. */
-  step: number;
-}
 
 const WHATSAPP_NUMBER = '528717795509';
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
@@ -20,17 +13,6 @@ const STEP_LABELS: Record<number, string> = {
   2: 'Datos del empleador',
   3: 'Tipo de problema',
 };
-
-/**
- * Maps a CRM field path to the flow step that owns it.
- * worker.* -> WorkerDataStep (1), employer.* -> EmployerDataStep (2), problem.* -> ProblemTypeStep (3).
- */
-function mapFieldToStep(field: string): number {
-  if (field.startsWith('worker.')) return 1;
-  if (field.startsWith('employer.')) return 2;
-  if (field.startsWith('problem.')) return 3;
-  return 0;
-}
 
 /**
  * Resolves the SINACOL server base URL.
@@ -86,17 +68,11 @@ const ResultStep: React.FC<StepProps> = ({ onClose, data, goToStep }) => {
       // 422 (CRM rejected the data) and 400 (validation errors) render the same way:
       // field-level errors that let the user go back to the step that owns each field.
       if (res.status === 422 || res.status === 400) {
-        const details = body?.details as Record<string, string[]> | undefined;
-        if (details && typeof details === 'object') {
-          const errors: FieldError[] = [];
-          for (const [path, messages] of Object.entries(details)) {
-            const step = mapFieldToStep(path);
-            const text = Array.isArray(messages) ? messages.join(' · ') : String(messages ?? '');
-            errors.push({ field: path, message: text, step });
-          }
+        const errors = parseFieldErrors(body?.details);
+        if (errors.some((err) => err.step > 0)) {
           setFieldErrors(errors);
         } else {
-          setErrorMessage(body?.error || 'Los datos no pasaron la validación.');
+          setErrorMessage('Algunos datos no pasaron la validación. Revisa tu información o escríbenos por WhatsApp.');
         }
         setStatus('error');
         return;
@@ -249,7 +225,7 @@ const ResultStep: React.FC<StepProps> = ({ onClose, data, goToStep }) => {
                     key={err.field}
                     className="bg-red-50 border border-red-100 rounded-lg px-3 py-2 text-xs text-red-700"
                   >
-                    <span className="uppercase text-[10px] text-red-500 block">{err.field}</span>
+                    <span className="uppercase text-[10px] text-red-500 block">{err.label}</span>
                     {err.message}
                   </li>
                 ))}
